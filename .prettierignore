@@ -1,0 +1,30 @@
+
+# vscode
+.vscode
+
+# tsdocs
+/docs
+
+# dependencies
+/node_modules
+
+# production
+/dist
+
+# server
+#/server
+
+# misc
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# package manager
+yarn-debug.log*
+yarn-error.log*
+
+# specific files
+jest.config.ts
+lerna.json
+webpack.config.js

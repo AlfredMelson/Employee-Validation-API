@@ -1,0 +1,17 @@
+
+# dependencies
+/node_modules
+
+# production
+/dist
+
+# misc
+.env
+
+# package manager
+yarn-debug.log*
+yarn-error.log*
+
+# specific files
+/logs/errorLog.txt
+/logs/requestLog.txt
