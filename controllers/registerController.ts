@@ -29,8 +29,11 @@ const handleNewUserRegistration = async (req: Request, res: Response) => {
     // encrypt the password received via ten salt rounds
     const hashedPwd = await bcrypt.hash(pwd, 10)
 
+    // increment the id based on the id of the last user in the db, if true
+    const userId = usersDB.users.length > 0 ? usersDB.users[usersDB.users.length - 1].id + 1 : 1
+
     //store the new user with the hased passsword
-    const newUser = { username: user, password: hashedPwd, email: email }
+    const newUser = { id: userId, username: user, password: hashedPwd, email: email }
 
     // pass in the new user to the database using the custom setUsers method
     usersDB.setUsers([...usersDB.users, newUser])
