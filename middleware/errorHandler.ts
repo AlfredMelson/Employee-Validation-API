@@ -1,5 +1,5 @@
-import { logEvents } from './logEvents'
-import { Request, Response, NextFunction } from 'express'
+const logEvents = require('./logEvents')
+import { Response } from 'express'
 
 const errorHandler = (err, res: Response) => {
   logEvents(`${err.name}:${err.message}`, 'errorLog.txt')

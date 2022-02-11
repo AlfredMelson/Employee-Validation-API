@@ -85,3 +85,14 @@
 20220211	12:01:19	4af5a1f9-4bdd-498f-87ff-66cae6899bd9	GET	undefined	/
 20220211	14:00:48	897484ee-d5b5-443c-8036-9eb2f2fbb421	OPTIONS	http://localhost:8080	/api/items
 20220211	14:00:48	d4b77f86-55d9-4ea9-a903-344e3a71053a	OPTIONS	http://localhost:8080	/api/user
+20220211	14:53:36	0452b281-8e22-4864-b85d-a6b47981365f	OPTIONS	http://localhost:3000	/auth
+20220211	14:55:47	25969469-155b-4957-8f59-d3cd5ad807cb	OPTIONS	http://localhost:3000	/register
+20220211	14:57:25	c0d0678b-b432-48e3-8af5-d35d72c25b3c	OPTIONS	http://localhost:3000	/register
+20220211	14:58:14	77ce8f9a-2a20-4bed-9a75-78ea567e0f3e	GET	http://localhost:3000	/logout
+20220211	15:01:39	b8607d6c-41a9-4748-b5b7-aedf357c6c2d	POST	undefined	/register
+20220211	15:02:09	ee65a672-cfe8-449a-b203-5510bcf0dc73	GET	undefined	/logout
+20220211	15:02:14	f7247c1b-5b4c-4e4f-9276-079dfd59672d	POST	undefined	/register
+20220211	15:05:56	afee4c88-d583-45ea-b08e-89efb8a121d4	GET	undefined	/logout
+20220211	15:06:00	2abdac6b-8e97-4300-acc5-1a27174a32fe	POST	undefined	/register
+20220211	15:08:14	937fb517-6243-4ba7-bf27-2626026568a4	POST	undefined	/register
+20220211	15:10:33	c3857ebf-2e41-4ffa-81c3-07baa1e12aa1	POST	undefined	/register

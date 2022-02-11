@@ -2,15 +2,16 @@ import express from 'express'
 const app = express()
 const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
-const { logger } = require('./middleware/logEvents')
+// const { logger } = require('./middleware/logEvents')
 // const employeeInitialization = require('./middleware/employeeInitialization')
 const errorHandler = require('./middleware/errorHandler')
 const verifyJWT = require('./middleware/verifyJWT')
 const cookieParser = require('cookie-parser')
 const credentials = require('./middleware/credentials')
+const items = require('./endpoints/itemsEndpoint')
 
 // middleware for logging events
-app.use(logger)
+// app.use(logger)
 
 // initialize the database
 // app.use(employeeInitialization)
@@ -40,6 +41,7 @@ app.use('/logout', require('./routes/logout'))
 app.use(verifyJWT)
 
 // routes after verification of jsonwebtoken
+app.use(items)
 app.use('/employees', require('./routes/api/employees'))
 
 // middleware for handling errors

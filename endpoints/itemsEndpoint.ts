@@ -1,16 +1,15 @@
-import { Router } from 'express'
-const authentication = require('../middleware/authentication')
+import express from 'express'
+const router = express.Router()
+const credentials = require('../middleware/credentials')
 const { handleUserItems, updateItem } = require('../controllers/itemsController')
 
-const router = Router()
-
-router.get('/items', authentication, (req, res) => {
+router.get('/items', credentials, (req, res) => {
   res.status(200).json({
     items: handleUserItems()
   })
 })
 
-router.post('/items', authentication, (req, res) => {
+router.post('/items', credentials, (req, res) => {
   const { id, name, role, email } = req.body
 
   if (!id || !name || !role || !email) {
@@ -23,10 +22,10 @@ router.post('/items', authentication, (req, res) => {
     name,
     role,
     email,
-    createdAt: new Date().toDateString()
+    createdAt: new Date().toISOString()
   })
 
   res.status(200).send()
 })
 
-export default router
+module.exports = router
