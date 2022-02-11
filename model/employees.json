@@ -2,70 +2,70 @@
   {
     "id": "001",
     "name": "Jonas Jonaitis",
-    "role": "definedRoles.admin",
+    "role": "admin",
     "email": "email123",
     "createdAt": "2022-02-11T11:13:42.296Z"
   },
   {
     "id": "002",
     "name": "Petras Petraitis",
-    "role": "definedRoles.read",
+    "role": "read",
     "email": "test@test.com",
     "createdAt": "2021-12-11T11:14:10.301Z"
   },
   {
     "id": "003",
     "name": "Povilas Povilaitis",
-    "role": "definedRoles.read",
+    "role": "read",
     "email": "email123",
     "createdAt": "2022-02-11T11:13:42.296Z"
   },
   {
     "id": "004",
     "name": "Juozas Juozaitis",
-    "role": "definedRoles.admin",
+    "role": "admin",
     "email": "test@gmail.com",
     "createdAt": "2022-02-11T11:13:42.296Z"
   },
   {
     "id": "005",
     "name": "Tomas Tomaitis",
-    "role": "definedRoles.admin",
+    "role": "admin",
     "email": "Vardenis2000@gmail.com",
     "createdAt": "2022-02-11T11:13:42.296Z"
   },
   {
     "id": "006",
     "name": "Giedrius Giedraitis",
-    "role": "definedRoles.write",
+    "role": "write",
     "email": "Vardenis2@gmail.com",
     "createdAt": "2022-02-11T11:13:42.296Z"
   },
   {
     "id": "007",
     "name": "Justas Justaitis",
-    "role": "definedRoles.admin",
+    "role": "admin",
     "email": "email@gmail.com",
     "createdAt": "2022-02-11T11:13:42.296Z"
   },
   {
     "id": "008",
     "name": "Laurynas Laurinaitis",
-    "role": "definedRoles.admin",
+    "role": "admin",
     "email": "pavardenis321@gmail.com",
     "createdAt": "2022-02-11T11:13:42.296Z"
   },
   {
     "id": "009",
     "name": "Gerda Gerdaitė",
-    "role": "definedRoles.write",
+    "role": "write",
     "email": "discordemail123@gmail.com.",
     "createdAt": "2022-02-11T11:13:42.296Z"
   },
   {
     "id": "010",
     "name": "Kristina Kristinaitė",
-    "role": "definedRoles.read",
+    "role": "read",
     "email": "pass1",
     "createdAt": "2022-02-11T11:13:42.296Z"
   }
