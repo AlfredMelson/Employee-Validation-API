@@ -1,0 +1,2 @@
+20220209	15:23:01	67eb0b7b-31c6-4122-9554-a4a90749b940	Error:Not allowed by CORS
+20220210	17:12:30	3fadddf7-18fb-4ac9-a10a-bb3b42041dc1	Error:Not allowed by CORS

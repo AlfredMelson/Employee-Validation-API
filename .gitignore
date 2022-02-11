@@ -11,7 +11,3 @@
 # package manager
 yarn-debug.log*
 yarn-error.log*
-
-# specific files
-/logs/errorLog.txt
-/logs/requestLog.txt

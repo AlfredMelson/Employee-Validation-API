@@ -83,3 +83,5 @@
 20220211	10:48:33	7776afa3-4e8b-43f6-9ca7-ccf11e0658d9	GET	undefined	/employees
 20220211	11:59:48	6cf14ea8-6587-4352-a11c-341790523fa3	GET	undefined	/
 20220211	12:01:19	4af5a1f9-4bdd-498f-87ff-66cae6899bd9	GET	undefined	/
+20220211	14:00:48	897484ee-d5b5-443c-8036-9eb2f2fbb421	OPTIONS	http://localhost:8080	/api/items
+20220211	14:00:48	d4b77f86-55d9-4ea9-a903-344e3a71053a	OPTIONS	http://localhost:8080	/api/user
