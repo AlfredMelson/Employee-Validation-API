@@ -1,6 +1,15 @@
 import type { Request, Response } from 'express'
-import { administrators } from '../model/administrators'
-import { removeRefreshToken } from '../services/tokenManager'
+import fsPromises from 'fs/promises'
+import administrators from '../model/administrators.json'
+import path from 'path'
+
+// modeled after useState in react with administrators & setAdministrators
+const adminDB = {
+  admins: administrators,
+  setAdmins: function (data: any) {
+    this.admins = data
+  }
+}
 
 // modeled after useState in react with administrators & setAdministrators
 
@@ -17,7 +26,7 @@ const handleAdminLogout = async (req: Request, res: Response) => {
   const refreshToken = cookies.jwt
 
   // check for admin(username) exists in the database with a refreshToken
-  const foundAdmin = administrators.find(admin => admin.refreshToken === refreshToken)
+  const foundAdmin = adminDB.admins.find(admin => admin.refreshToken === refreshToken)
 
   // if no foundAdmin proceed with clearing the cookie
   if (!foundAdmin) {
@@ -30,29 +39,25 @@ const handleAdminLogout = async (req: Request, res: Response) => {
 
   // At this point, the same refreshToken was found in the db, so proceed with deletion.
 
-  // check for admin(username) exists in the database with a refreshToken
-  // const otherAdmins = administrators.filter(
-  //   admin => admin.refreshToken !== foundAdmin.refreshToken
-  // )
+  // check for user(username) exists in the database with a refreshToken
+  const otherAdmins = adminDB.admins.filter(
+    person => person.refreshToken !== foundAdmin.refreshToken
+  )
 
   // create currentAdmin object with the foundAdmin and refreshToken set to ''
-  // const currentAdmin = { ...foundAdmin, refreshToken: '' }
+  const currentAdmin = { ...foundAdmin, refreshToken: '' }
 
-  const wipedRefreshToken = ''
-  removeRefreshToken(wipedRefreshToken, foundAdmin.id)
-
-  // pass in the other admins along with the current admin (just defined) to setAdministrators
-  // setAdministrators([...otherAdmins, currentAdmin])
+  // pass in the other users along with the current user (just defined) to the setUser array
+  adminDB.setAdmins([...otherAdmins, currentAdmin])
 
   // write the current user to the file (database)
-  // writeFile(
-  //   path.join(__dirname, '..', 'model', 'administrators.json'),
-  //   JSON.stringify(administrators),
-  //   err => {
-  //     if (err) throw err
-  //     console.log('The file has been saved.')
-  //   }
-  // )
+  await fsPromises.writeFile(
+    // navigate from the current directory up and into the model directory, to users.json
+    path.join(__dirname, '..', 'model', 'administrators.json'),
+
+    // specify the data to be written
+    JSON.stringify(adminDB.admins)
+  )
 
   // delete cookie
   res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true })

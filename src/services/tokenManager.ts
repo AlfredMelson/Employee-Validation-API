@@ -1,24 +1,5 @@
 import jwt from 'jsonwebtoken'
 
-interface IToken {
-  token: string
-  userId: number
-}
-
-let tokens: Array<IToken> = []
-
-export const addToken = (token: string, userId: number) => {
-  tokens.push({ token, userId })
-}
-
-export const removeToken = (token: string) => {
-  tokens = tokens.filter(({ token: t }) => t !== token)
-}
-
-export const isTokenValid = (token: string) => tokens.some(({ token: t }) => t === token)
-
-export const getTokenOwner = (token: string) => tokens.find(({ token: t }) => t === token)?.userId
-
 export const createJwtAccessToken = (admin: string) =>
   jwt.sign(
     // first: payload will be the foundAdmin username object
@@ -44,11 +25,3 @@ export const createJwtRefreshToken = (admin: string) =>
     // third: options value for expiration
     { expiresIn: '1d' }
   )
-
-export const addRefreshToken = (token: string, userId: number) => {
-  tokens.push({ token, userId })
-}
-
-export const removeRefreshToken = (token: string, userId: number) => {
-  tokens.push({ token, userId })
-}

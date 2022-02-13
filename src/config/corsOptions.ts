@@ -1,4 +1,9 @@
-export const allowedUrls = ['http://example1.com', 'http://localhost:3000']
+export const allowedUrls = [
+  'http://example1.com',
+  'http://localhost:3000',
+  'http://localhost:8080',
+  '*' // for testing purposes
+]
 
 export const corsOptionsDelegate = function (req: any, callback: any) {
   let corsOptions: { origin: boolean }
@@ -11,7 +16,7 @@ export const corsOptionsDelegate = function (req: any, callback: any) {
 }
 
 // testing cors
-// export const corsOptions = {
+// const corsApprovedOrigins = {
 //   origin: (origin: string, callback: any) => {
 //     const approvedOrigins = ['http://localhost:3000']
 

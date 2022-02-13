@@ -1,4 +1,4 @@
-export interface IAdministrators {
+interface IAdministrators {
   id: number
   username: string
   email: string
@@ -6,7 +6,7 @@ export interface IAdministrators {
   refreshToken?: string
 }
 
-export const administrators = [
+export const administrators: IAdministrators[] = [
   {
     id: 1,
     username: 'admin',
