@@ -68,19 +68,5 @@
     "role": "read",
     "email": "pass1",
     "createdAt": "2022-02-11T11:13:42.296Z"
-  },
-  {
-    "id": "11",
-    "name": "Alfred Melson",
-    "role": "read",
-    "email": "vaughn@outlook.com",
-    "createdAt": "2022-02-14T07:48:16.061Z"
-  },
-  {
-    "id": "12",
-    "name": "Vejuna Melson",
-    "role": "write",
-    "email": "vejuna@gmail.com",
-    "createdAt": "2022-02-14T09:15:30.086Z"
   }
 ]

@@ -4,7 +4,7 @@ const router = express.Router()
 // import EmployeeValidator from '../validation/employee'
 // import handleRequestValidationErrors from '../middleware/validation'
 
-router.post(
+router.delete(
   '/delete',
 
   // validate the request body
