@@ -1,37 +1,31 @@
 import request from 'supertest'
 import app from '../src/app'
 
-describe('GET /login', () => {
+describe('GET /admin/logout', () => {
   it('should return 200 OK', () => {
-    return request(app).get('/login').expect(200)
+    return request(app).get('/admin/logout').expect(200)
   })
 })
 
-describe('GET /logout', () => {
+describe('GET /admin/auth', () => {
   it('should return 200 OK', () => {
-    return request(app).get('/logout').expect(200)
+    return request(app).get('/admin/auth').expect(200)
   })
 })
 
-describe('GET /auth', () => {
-  it('should return 200 OK', () => {
-    return request(app).get('/auth').expect(200)
-  })
-})
-
-describe('GET /register', () => {
+describe('GET /admin/register', () => {
   it('should return 200 OK', done => {
     request(app)
-      .get('/register')
+      .get('/admin/register')
       .expect(200)
       .end(() => done())
   })
 })
 
-describe('GET /refresh', () => {
+describe('GET /admin/refresh', () => {
   it('should return 302 Found for redirection', done => {
     request(app)
-      .get('/refresh')
+      .get('/admin/refresh')
       .expect(302)
       .end(() => done())
   })

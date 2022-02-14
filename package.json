@@ -19,7 +19,6 @@
     "lint-ts": "tsc --noEmit && eslint \"**/*.ts\" --quiet --fix",
     "serve-debug": "tsnd --debug dist/server.js",
     "start": "node dist/src/server.js",
-    "typeCheck": "tsc --pretty",
     "test": "jest --forceExit --coverage --verbose",
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yarn watch-ts\" \"yarn serve-debug\"",
     "watch-ts": "tsc -w"
@@ -62,6 +61,7 @@
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
     "supertest": "6.2.2",
+    "ts-jest": "^27.1.3",
     "ts-node": "^10.5.0",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.5.5"
