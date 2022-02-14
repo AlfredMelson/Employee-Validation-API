@@ -17,10 +17,6 @@ const handleAdminAuthentication = async (req: Request, res: Response) => {
   // destructure the request body
   const { username, password } = req.body
 
-  // check for missing username or password and send status 400 if true: 'server could not understand the request due to invalid syntax'
-  if (!username || !password)
-    return res.status(400).json({ message: 'Username and password are required.' })
-
   // check for admin(username) exists in the database
   const foundAdmin = administrators.find((admin: any) => admin.username === username)
 

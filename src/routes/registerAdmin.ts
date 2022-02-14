@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express'
 import { validationResult } from 'express-validator'
-import handleNewAdminRegistration from '../controllers/registerController'
 import AdministratorValidator from '../validation/administrator'
+import handleAdminRegistration from '../controllers/registerController'
 const router = express.Router()
 
 router.post(
@@ -20,7 +20,7 @@ router.post(
   },
 
   // handle the request
-  handleNewAdminRegistration
+  handleAdminRegistration
 )
 
 export default router

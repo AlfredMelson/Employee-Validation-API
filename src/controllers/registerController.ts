@@ -12,7 +12,7 @@ const adminDB = {
   }
 }
 
-const handleNewAdminRegistration = async (req: Request, res: Response) => {
+const handleAdminRegistration = async (req: Request, res: Response) => {
   // destructure the request body
   const { username, password, email } = req.body
 
@@ -55,4 +55,4 @@ const handleNewAdminRegistration = async (req: Request, res: Response) => {
   }
 }
 
-export default handleNewAdminRegistration
+export default handleAdminRegistration
