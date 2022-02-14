@@ -14,13 +14,13 @@ const adminDB = {
 
 const handleAdminRegistration = async (req: Request, res: Response) => {
   // destructure the request body
-  const { username, password, email } = req.body
+  const { adminUsername, adminPassword, adminEmail } = req.body
 
   // check for duplicate usernames in the db
-  const duplicateUsername = administrators.find((admin: any) => admin.username === username)
+  const duplicateUsername = administrators.find((admin: any) => admin.username === adminUsername)
 
   // check for duplicate email in the db
-  const duplicateEmail = administrators.find((admin: any) => admin.email === email)
+  const duplicateEmail = administrators.find((admin: any) => admin.email === adminEmail)
 
   // send status 409: 'request conflict - username is already taken'
   if (duplicateUsername || duplicateEmail) return res.sendStatus(409)
@@ -28,13 +28,13 @@ const handleAdminRegistration = async (req: Request, res: Response) => {
   // create a new administrator
   try {
     // encrypt the password received via ten salt rounds
-    const hashedPwd = await bcrypt.hash(password, 10)
+    const hashedPwd = await bcrypt.hash(adminPassword, 10)
 
     // increment the id based on the id of the last admin in the db, if true
     const userId = adminDB.admins.length > 0 ? adminDB.admins[adminDB.admins.length - 1].id + 1 : 1
 
     //store the new admin with the hased passsword
-    const newAdmin = { id: userId, username: username, password: hashedPwd, email: email }
+    const newAdmin = { id: userId, username: adminUsername, password: hashedPwd, email: adminEmail }
 
     // pass in the new admin to the database using the custom setAdmins method
     adminDB.setAdmins([...adminDB.admins, newAdmin])
@@ -48,7 +48,7 @@ const handleAdminRegistration = async (req: Request, res: Response) => {
     )
 
     // send status 201: 'request succeeded, and a new resource was created as a result'
-    res.status(201).json({ success: `${username} has been created.` })
+    res.status(201).json({ success: `${adminUsername} has been created.` })
   } catch (err) {
     // send status 500: 'server has encountered a situation it does not know how to handle'
     res.status(500).json({ message: err })

@@ -2,7 +2,7 @@ import { employees } from '../model/employees'
 
 const items: any[] = []
 
-const employeeManager = () => {
+const administrator = () => {
   return employees.map((userItem: { id: any }) => {
     const updatedItem = items.find(({ id }) => id === userItem.id)
 
@@ -12,4 +12,4 @@ const employeeManager = () => {
   })
 }
 
-export default employeeManager
+export default administrator

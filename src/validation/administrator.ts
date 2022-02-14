@@ -4,19 +4,19 @@ class AdministratorValidator {
   checkCreateAdministrator() {
     return [
       // Username requirements: must start with a lowercase or uppercase letter followed by 3 to 23 characters that may letters, numbers, underscores, or hyphens
-      body('username').notEmpty().withMessage('Username value should not be empty'),
+      body('adminUsername').notEmpty().withMessage('Username value should not be empty'),
       // Password requirements: must start with a lowercase or uppercase letter followed by 3 to 23 characters that may letters, numbers, underscores, or hyphens
-      body('password').notEmpty().withMessage('Password value should not be empty'),
+      body('adminPassword').notEmpty().withMessage('Password value should not be empty'),
       // Email address requirements:
-      body('email').notEmpty().withMessage('Email value should not be empty')
+      body('adminEmail').notEmpty().withMessage('Email value should not be empty')
     ]
   }
   checkAuthAdministrator() {
     return [
       // Username requirements: must start with a lowercase or uppercase letter followed by 3 to 23 characters that may letters, numbers, underscores, or hyphens
-      body('username').notEmpty().withMessage('Username value should not be empty'),
+      body('adminUsername').notEmpty().withMessage('Username value should not be empty'),
       // Password requirements: must start with a lowercase or uppercase letter followed by 3 to 23 characters that may letters, numbers, underscores, or hyphens
-      body('password').notEmpty().withMessage('Password value should not be empty')
+      body('adminPassword').notEmpty().withMessage('Password value should not be empty')
     ]
   }
   // TODO: Validate the request cookie

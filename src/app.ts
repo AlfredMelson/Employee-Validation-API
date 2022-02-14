@@ -1,18 +1,20 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
-import verifyJWT from './middleware/verifyJWT'
-import credentials from './middleware/credentials'
+import verification from './middleware/verification'
+// import credentials from './middleware/credentials'
 import cookieParser from 'cookie-parser'
-import registerAdminRouter from './routes/registerAdmin'
-import authAdminRouter from './routes/authAdmin'
-import refreshAdminRouter from './routes/refreshAdmin'
-import logoutAdminRouter from './routes/logoutAdmin'
-import itemsRouter from './routes/api/items'
+import {
+  adminRegisterRoute,
+  adminAuthRoute,
+  adminRefreshRoute,
+  adminLogoutRoute
+} from './routes/admin'
+import { emplDeletionRoute, emplRegisterRoute, emplUpdateRoute } from './routes/empl'
+// import { logger } from './middleware/logEvents'
 // import { corsOptionsDelegate } from './config/corsOptions'
 // import corsOptions from './config/corsOptions'
 // import errorHandler from './middleware/errorHandler'
-// import { logger } from './middleware/logEvents'
 
 const app = express()
 
@@ -20,7 +22,7 @@ const app = express()
 // app.use(logger)
 
 // Handle options credentials check before CORS and fetch cookies credentials requirement
-app.use(credentials)
+// app.use(credentials)
 
 // cross origin resource sharing configuration
 // enable pre-flight across-the-board
@@ -38,16 +40,18 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 // routes
-app.use('/register', registerAdminRouter)
-app.use('/auth', authAdminRouter)
-app.use('/refresh', refreshAdminRouter)
-app.use('/logout', logoutAdminRouter)
-
-// verification of jsonwebtoken
-app.use(verifyJWT)
+app.use('/admin', adminRegisterRoute)
+app.use('/admin', adminAuthRoute)
+app.use('/admin', adminRefreshRoute)
+app.use('/admin', adminLogoutRoute)
 
 // routes after verification of jsonwebtoken
-app.use('/items', itemsRouter)
+app.use('/api', emplRegisterRoute)
+app.use('/api', emplUpdateRoute)
+app.use('/api', emplDeletionRoute)
+
+// verification of jsonwebtoken
+app.use(verification)
 
 // middleware for handling errors
 // app.use(errorHandler)

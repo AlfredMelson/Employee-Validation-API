@@ -1,7 +1,7 @@
 import type { Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
 
-const verifyJWT = (req: any, res: Response, next: NextFunction) => {
+const verification = (req: any, res: Response, next: NextFunction) => {
   // req.header can receive both capitalization cases
   const authHeader = req.headers['authorization'] || req.headers['Authorization']
 
@@ -36,4 +36,4 @@ const verifyJWT = (req: any, res: Response, next: NextFunction) => {
   )
 }
 
-export default verifyJWT
+export default verification

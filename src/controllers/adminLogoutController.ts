@@ -39,7 +39,7 @@ const handleAdminLogout = async (req: Request, res: Response) => {
 
   // At this point, the same refreshToken was found in the db, so proceed with deletion.
 
-  // check for user(username) exists in the database with a refreshToken
+  // check for admin(username) exists in the database with a refreshToken
   const otherAdmins = adminDB.admins.filter(
     person => person.refreshToken !== foundAdmin.refreshToken
   )
@@ -47,10 +47,10 @@ const handleAdminLogout = async (req: Request, res: Response) => {
   // create currentAdmin object with the foundAdmin and refreshToken set to ''
   const currentAdmin = { ...foundAdmin, refreshToken: '' }
 
-  // pass in the other users along with the current user (just defined) to the setUser array
+  // pass in the other users along with the current admin (just defined) to setAdmins
   adminDB.setAdmins([...otherAdmins, currentAdmin])
 
-  // write the current user to the file (database)
+  // write the current admin to the file (database)
   await fsPromises.writeFile(
     // navigate from the current directory up and into the model directory, to users.json
     path.join(__dirname, '..', 'model', 'administrators.json'),
