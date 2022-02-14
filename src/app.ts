@@ -17,9 +17,8 @@ import {
   emplRegisterRoute,
   emplUpdateRoute
 } from './routes/empl'
+import corsOptions from './config/corsOptions'
 // import { logger } from './middleware/logEvents'
-// import { corsOptionsDelegate } from './config/corsOptions'
-// import corsOptions from './config/corsOptions'
 // import errorHandler from './middleware/errorHandler'
 
 const app = express()
@@ -31,10 +30,7 @@ const app = express()
 app.use(credentials)
 
 // cross origin resource sharing configuration
-// enable pre-flight across-the-board
-app.options('*', cors)
-// app.use(cors(corsOptionsDelegate))
-// app.use(cors(corsOptions))
+app.use(cors(corsOptions))
 
 // middleware for handling json
 app.use(bodyParser.json())
