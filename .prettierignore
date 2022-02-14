@@ -1,9 +1,6 @@
 
 # vscode
-.vscode
-
-# tsdocs
-/docs
+/.vscode
 
 # dependencies
 /node_modules
@@ -11,8 +8,8 @@
 # production
 /dist
 
-# server
-#/server
+# testing
+/coverage
 
 # misc
 .env.local

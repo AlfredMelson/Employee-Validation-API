@@ -5,9 +5,16 @@
 # production
 /dist
 
+# testing
+/coverage
+
 # misc
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # package manager
-yarn-debug.log*
-yarn-error.log*
+yarn-debug.log
+yarn-error.log

@@ -12,6 +12,7 @@
     "build": "yarn build-ts && yarn lint-ts",
     "clean": "lerna clean --yes && rimraf node_modules yarn.lock",
     "clean-dist": "rimraf dist",
+    "clean-test": "rimraf coverage",
     "debug": "yarn build && yarn watch-debug",
     "dev": "tsnd --respawn src/server.ts",
     "format": "prettier --write \"src/**/*.{ts,json}\"",
