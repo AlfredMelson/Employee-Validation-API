@@ -2,7 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import verification from './middleware/verification'
-// import credentials from './middleware/credentials'
+import credentials from './middleware/credentials'
 import cookieParser from 'cookie-parser'
 import {
   adminRegisterRoute,
@@ -10,7 +10,13 @@ import {
   adminRefreshRoute,
   adminLogoutRoute
 } from './routes/admin'
-import { emplDeletionRoute, emplRegisterRoute, emplUpdateRoute } from './routes/empl'
+import {
+  emplDeletionRoute,
+  emplGetAllRoute,
+  emplGetOneRoute,
+  emplRegisterRoute,
+  emplUpdateRoute
+} from './routes/empl'
 // import { logger } from './middleware/logEvents'
 // import { corsOptionsDelegate } from './config/corsOptions'
 // import corsOptions from './config/corsOptions'
@@ -22,7 +28,7 @@ const app = express()
 // app.use(logger)
 
 // Handle options credentials check before CORS and fetch cookies credentials requirement
-// app.use(credentials)
+app.use(credentials)
 
 // cross origin resource sharing configuration
 // enable pre-flight across-the-board
@@ -46,6 +52,8 @@ app.use('/admin', adminRefreshRoute)
 app.use('/admin', adminLogoutRoute)
 
 // routes after verification of jsonwebtoken
+app.use('/api', emplGetOneRoute)
+app.use('/api', emplGetAllRoute)
 app.use('/api', emplRegisterRoute)
 app.use('/api', emplUpdateRoute)
 app.use('/api', emplDeletionRoute)
