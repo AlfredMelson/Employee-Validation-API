@@ -1,72 +1,86 @@
 [
   {
-    "id": "001",
+    "id": "1",
     "name": "Jonas Jonaitis",
     "role": "admin",
     "email": "email123",
     "createdAt": "2022-02-11T11:13:42.296Z"
   },
   {
-    "id": "002",
+    "id": "2",
     "name": "Petras Petraitis",
     "role": "read",
     "email": "test@test.com",
     "createdAt": "2021-12-11T11:14:10.301Z"
   },
   {
-    "id": "003",
+    "id": "3",
     "name": "Povilas Povilaitis",
     "role": "read",
     "email": "email123",
     "createdAt": "2022-02-11T11:13:42.296Z"
   },
   {
-    "id": "004",
+    "id": "4",
     "name": "Juozas Juozaitis",
     "role": "admin",
     "email": "test@gmail.com",
     "createdAt": "2022-02-11T11:13:42.296Z"
   },
   {
-    "id": "005",
+    "id": "5",
     "name": "Tomas Tomaitis",
     "role": "admin",
     "email": "Vardenis2000@gmail.com",
     "createdAt": "2022-02-11T11:13:42.296Z"
   },
   {
-    "id": "006",
+    "id": "6",
     "name": "Giedrius Giedraitis",
     "role": "write",
     "email": "Vardenis2@gmail.com",
     "createdAt": "2022-02-11T11:13:42.296Z"
   },
   {
-    "id": "007",
+    "id": "7",
     "name": "Justas Justaitis",
     "role": "admin",
     "email": "email@gmail.com",
     "createdAt": "2022-02-11T11:13:42.296Z"
   },
   {
-    "id": "008",
+    "id": "8",
     "name": "Laurynas Laurinaitis",
     "role": "admin",
     "email": "pavardenis321@gmail.com",
     "createdAt": "2022-02-11T11:13:42.296Z"
   },
   {
-    "id": "009",
+    "id": "9",
     "name": "Gerda Gerdaitė",
     "role": "write",
     "email": "discordemail123@gmail.com.",
     "createdAt": "2022-02-11T11:13:42.296Z"
   },
   {
-    "id": "010",
+    "id": "10",
     "name": "Kristina Kristinaitė",
     "role": "read",
     "email": "pass1",
     "createdAt": "2022-02-11T11:13:42.296Z"
+  },
+  {
+    "id": "11",
+    "name": "Alfred Melson",
+    "role": "read",
+    "email": "vaughn@outlook.com",
+    "createdAt": "2022-02-14T07:48:16.061Z"
+  },
+  {
+    "id": "12",
+    "name": "Vejuna Melson",
+    "role": "write",
+    "email": "vejuna@gmail.com",
+    "createdAt": "2022-02-14T09:15:30.086Z"
   }
 ]
