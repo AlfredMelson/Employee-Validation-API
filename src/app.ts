@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser'
 import {
   adminRegisterRoute,
   adminAuthRoute,
+  adminGetAllRoute,
   adminRefreshRoute,
   adminLogoutRoute
 } from './routes/admin'
@@ -45,6 +46,7 @@ app.use(cookieParser())
 app.use('/admin', adminRegisterRoute)
 app.use('/admin', adminAuthRoute)
 app.use('/admin', adminRefreshRoute)
+app.use('/admin', adminGetAllRoute)
 app.use('/admin', adminLogoutRoute)
 
 // routes after verification of jsonwebtoken

@@ -62,7 +62,7 @@ const handleAdminAuthentication = async (req: Request, res: Response) => {
       maxAge: 24 * 60 * 60 * 1000
     })
 
-    // accesstoken is sent as json, that the FED can use to authenticate the user. FED needs to store this in memory.
+    // accesstoken is sent as json, that the FED can use to authenticate the user. FED needs to store this in memory (context).
     res.json({ accessToken })
   } else {
     // send status 401: 'unauthorized; response means unauthenticated' if password mismatch

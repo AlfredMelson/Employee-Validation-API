@@ -2,18 +2,26 @@ import type { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import administrators from '../model/administrators.json'
 
+// modeled after useState in react with administrators & setAdministrators
+const adminDB = {
+  admins: administrators,
+  setAdmins: function (data: any) {
+    this.admins = data
+  }
+}
+
 const handleAdminRefreshToken = (req: Request, res: Response) => {
   // set cookies to the request cookies
   const cookies = req.cookies
 
   // check that there are no cookies or "optionally chained" jwt property and send status 401 if true: 'unauthorized; response means unauthenticated'
-  if (!cookies?.jwt) return res.sendStatus(401)
+  if (!cookies.jwt) return res.sendStatus(401)
 
   // define the refreshToken and set it equal to value received
   const refreshToken = cookies.jwt
 
   // check for admin(username) exists in the database with a refreshToken
-  const foundAdmin = administrators.find(admin => admin.refreshToken === refreshToken)
+  const foundAdmin = adminDB.admins.find(admin => admin.refreshToken === refreshToken)
 
   // send status 403: 'forbidden; no access rights to the content' if no foundAdmin
   if (!foundAdmin) return res.sendStatus(403)
@@ -39,7 +47,7 @@ const handleAdminRefreshToken = (req: Request, res: Response) => {
         // process.env.ACCESS_TOKEN_SECRET,
         '49d602b423a56b281168f50b58d444af414c819ee9d75ff674e6668361123626fc4a67a07e859d76fee75c1fd7c7071b1d28bc798f6e47835d72f8e48ab77972',
         {
-          expiresIn: '10m'
+          expiresIn: '1d'
         }
       )
 
