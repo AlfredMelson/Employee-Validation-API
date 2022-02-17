@@ -47,7 +47,7 @@ const handleAdminRefreshToken = (req: Request, res: Response) => {
         // process.env.ACCESS_TOKEN_SECRET,
         '49d602b423a56b281168f50b58d444af414c819ee9d75ff674e6668361123626fc4a67a07e859d76fee75c1fd7c7071b1d28bc798f6e47835d72f8e48ab77972',
         {
-          expiresIn: '1d'
+          expiresIn: '15s'
         }
       )
 

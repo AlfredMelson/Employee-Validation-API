@@ -16,7 +16,7 @@ const handleEmployeeUpdate = async (req: Request, res: Response) => {
   const { emplId, emplName, emplRole, emplEmail } = req.body
 
   // check for empl(email) exists in the database
-  const foundEmpl = emplDB.empls.find((empl: any) => empl.email === emplEmail)
+  const foundEmpl = emplDB.empls.find(empl => empl.id === emplId)
 
   // send status 401: 'unauthorized; response means unauthenticated' if no duplicate found
   if (!foundEmpl) return res.sendStatus(401)
@@ -24,12 +24,12 @@ const handleEmployeeUpdate = async (req: Request, res: Response) => {
   // create a new employee
   try {
     // create an array of the other empls in the database that are not the current empl
-    const otherEmpls = emplDB.empls.filter((empl: any) => empl.email !== emplEmail)
+    const otherEmpls = emplDB.empls.filter(empl => empl.id !== emplId)
 
     // generate a new Date().toISOString()
     const updatedDate = new Date().toISOString()
 
-    // store the new empl with the hased passsword
+    // store the new empl with the updated email address
     const updatedEmpl = {
       id: emplId,
       name: emplName,
