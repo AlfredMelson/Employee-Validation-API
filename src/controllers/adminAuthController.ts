@@ -34,16 +34,22 @@ const handleAdminAuthentication = async (req: Request, res: Response) => {
     // create jwt refreshToken
     const refreshToken = createJwtRefreshToken(foundAdmin.username)
 
-    // Purpose: save refreshToken with the current admin. This will allow for the creation of a logout route that will invalidate the refreshToken when an admin logs out.  RefreshToken with the current admin in a database that can be cross referenced when it is sent back to create another access token.
-
-    // create an array of the other admins in the database that are not the current admin
-    const otherAdmin = adminDB.admins.filter(admin => admin.username !== foundAdmin.username)
+    // Purpose: save refreshToken with the current admin. This will allow for the creation of a logout route that will invalidate the refreshToken when an admin logs out.  RefreshToken with the current admin is stored in the database and can be cross referenced when it is sent back to create another access token.
 
     // create currentAdmin object with the foundAdmin and their refreshToken
     const currentAdmin = { ...foundAdmin, refreshToken }
 
-    // pass in the other admins along with the current admin to setAdmins
-    adminDB.setAdmins([...otherAdmin, currentAdmin])
+    // create an array of the other admins in the database that are not the current admin
+    const otherAdmin = adminDB.admins.filter(admin => admin.username !== foundAdmin.username)
+
+    // check the number of objects
+    if (Object.keys(adminDB.admins).length <= 1) {
+      // pass in the current admin as the sole admin to setAdmins
+      adminDB.setAdmins([currentAdmin])
+    } else {
+      // pass in the other admins along with the current admin to setAdmins
+      adminDB.setAdmins([...otherAdmin, currentAdmin])
+    }
 
     // write the current user to the database
     await fsPromises.writeFile(
