@@ -5,7 +5,7 @@ import { createJwtAccessToken, createJwtRefreshToken } from '../services/tokenMa
 import administrators from '../model/administrators.json'
 import path from 'path'
 
-// modeled after useState in react with administrators & setAdministrators
+// modeled after useState in react with admins & setAdmins
 const adminDB = {
   admins: administrators,
   setAdmins: function (data: any) {
@@ -36,18 +36,18 @@ const handleAdminAuthentication = async (req: Request, res: Response) => {
 
     // Purpose: save refreshToken with the current admin. This will allow for the creation of a logout route that will invalidate the refreshToken when an admin logs out.  RefreshToken with the current admin in a database that can be cross referenced when it is sent back to create another access token.
 
-    // create an array of the other users in the database that are not the user logged in
+    // create an array of the other admins in the database that are not the current admin
     const otherAdmin = adminDB.admins.filter(admin => admin.username !== foundAdmin.username)
 
     // create currentAdmin object with the foundAdmin and their refreshToken
     const currentAdmin = { ...foundAdmin, refreshToken }
 
-    // pass in the other users along with the logged in user to setAdmins
+    // pass in the other admins along with the current admin to setAdmins
     adminDB.setAdmins([...otherAdmin, currentAdmin])
 
     // write the current user to the database
     await fsPromises.writeFile(
-      // navigate from the current directory up and into the model directory, to users.json
+      // navigate from the current directory up and into the model directory, to administrators.json
       path.join(__dirname, '..', 'model', 'administrators.json'),
 
       // specify the data to be written
@@ -62,7 +62,7 @@ const handleAdminAuthentication = async (req: Request, res: Response) => {
       maxAge: 24 * 60 * 60 * 1000
     })
 
-    // accesstoken is sent as json, that the FED can use to authenticate the user. FED needs to store this in memory (context).
+    // accesstoken is sent as json, that the FED can use to authenticate the admin. FED needs to store this in memory (react context).
     res.json({ accessToken })
   } else {
     // send status 401: 'unauthorized; response means unauthenticated' if password mismatch

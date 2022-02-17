@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 import administrators from '../model/administrators.json'
 import path from 'path'
 
-// modeled after useState in react with administrators & setAdministrators
+// modeled after useState in react with admins & setAdmins
 const adminDB = {
   admins: administrators,
   setAdmins: function (data: any) {
@@ -16,7 +16,7 @@ const handleAdminRegistration = async (req: Request, res: Response) => {
   // destructure the request body
   const { adminUsername, adminPassword, adminEmail } = req.body
 
-  // check for duplicate usernames in the db
+  // check for duplicate usernames in the admin database
   const duplicateUsername = administrators.find((admin: any) => admin.username === adminUsername)
 
   // check for duplicate email in the db

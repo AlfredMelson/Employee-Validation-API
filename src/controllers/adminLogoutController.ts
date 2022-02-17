@@ -3,15 +3,13 @@ import fsPromises from 'fs/promises'
 import administrators from '../model/administrators.json'
 import path from 'path'
 
-// modeled after useState in react with administrators & setAdministrators
+// modeled after useState in react with admins & setAdmins
 const adminDB = {
   admins: administrators,
   setAdmins: function (data: any) {
     this.admins = data
   }
 }
-
-// modeled after useState in react with administrators & setAdministrators
 
 const handleAdminLogout = async (req: Request, res: Response) => {
   // NOTE: FED needs to delete the accessToken in clientside memory
@@ -25,7 +23,7 @@ const handleAdminLogout = async (req: Request, res: Response) => {
   // define the refreshToken and set it equal to value received
   const refreshToken = cookies.jwt
 
-  // check for admin(username) exists in the database with a refreshToken
+  // check for admin (username) exists in the database with a refreshToken
   const foundAdmin = adminDB.admins.find(admin => admin.refreshToken === refreshToken)
 
   // if no foundAdmin proceed with clearing the cookie
@@ -39,7 +37,7 @@ const handleAdminLogout = async (req: Request, res: Response) => {
 
   // At this point, the same refreshToken was found in the db, so proceed with deletion.
 
-  // check for admin(username) exists in the database with a refreshToken
+  // check for admin (username) exists in the database with a refreshToken
   const otherAdmins = adminDB.admins.filter(
     person => person.refreshToken !== foundAdmin.refreshToken
   )
@@ -47,12 +45,12 @@ const handleAdminLogout = async (req: Request, res: Response) => {
   // create currentAdmin object with the foundAdmin and refreshToken set to ''
   const currentAdmin = { ...foundAdmin, refreshToken: '' }
 
-  // pass in the other users along with the current admin (just defined) to setAdmins
+  // pass in the other admins along with the current admin to setAdmins
   adminDB.setAdmins([...otherAdmins, currentAdmin])
 
   // write the current admin to the file (database)
   await fsPromises.writeFile(
-    // navigate from the current directory up and into the model directory, to users.json
+    // navigate from the current directory up and into the model directory, to administrators.json
     path.join(__dirname, '..', 'model', 'administrators.json'),
 
     // specify the data to be written

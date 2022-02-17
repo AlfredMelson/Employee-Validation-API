@@ -3,7 +3,7 @@ import employees from '../model/employees.json'
 
 const handleGetAllEmpl = async (req: Request, res: Response) => {
   try {
-    // respond with all employees
+    // respond with all empls
     res.json(employees)
   } catch (err) {
     // send status 500: 'server has encountered a situation it does not know how to handle'

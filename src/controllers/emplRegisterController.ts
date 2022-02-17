@@ -3,7 +3,7 @@ import fsPromises from 'fs/promises'
 import path from 'path'
 import employees from '../model/employees.json'
 
-// modeled after useState in react with users & setUsers
+// modeled after useState in react with empls & setEmpls
 const emplDB = {
   empls: employees,
   setEmpls: function (data: any) {

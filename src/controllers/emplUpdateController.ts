@@ -3,7 +3,7 @@ import fsPromises from 'fs/promises'
 import path from 'path'
 import employees from '../model/employees.json'
 
-// modeled after useState in react with users & setUsers
+// modeled after useState in react with empls & setEmpls
 const emplDB = {
   empls: employees,
   setEmpls: function (data: any) {
@@ -23,7 +23,7 @@ const handleEmployeeUpdate = async (req: Request, res: Response) => {
 
   // create a new employee
   try {
-    // create an array of the other users in the database that are not the user logged in
+    // create an array of the other empls in the database that are not the current empl
     const otherEmpls = emplDB.empls.filter((empl: any) => empl.email !== emplEmail)
 
     // generate a new Date().toISOString()

@@ -2,7 +2,7 @@ import type { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import administrators from '../model/administrators.json'
 
-// modeled after useState in react with administrators & setAdministrators
+// modeled after useState in react with admins & setAdmins
 const adminDB = {
   admins: administrators,
   setAdmins: function (data: any) {
@@ -40,7 +40,7 @@ const handleAdminRefreshToken = (req: Request, res: Response) => {
       // send status 403: 'forbidden; no access rights to the content'; ie invalid token or the foundUser username is not the same as the decoded username
       if (err || foundAdmin.username !== decoded.username) return res.sendStatus(403)
 
-      // set the user equal to the decoded username (passed in the jwt) along with the accessToken
+      // set the admin equal to the decoded username (passed in the jwt) along with the accessToken
       const accessToken = jwt.sign(
         { username: decoded.username },
 
@@ -51,7 +51,7 @@ const handleAdminRefreshToken = (req: Request, res: Response) => {
         }
       )
 
-      // accesstoken is sent as json, that the FED can use to authenticate the user. FED needs to store this in memory.
+      // accesstoken is sent as json, that the FED can use to authenticate the admin. FED needs to store this in memory.
       res.json({ accessToken })
     }
   )
