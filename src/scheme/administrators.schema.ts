@@ -21,13 +21,4 @@ export const createAdminSchema = object({
   })
 })
 
-export const verifyAdminSchema = object({
-  params: object({
-    id: string(),
-    verificationCode: string()
-  })
-})
-
 export type CreateAdminInput = TypeOf<typeof createAdminSchema>['body']
-
-export type VerifyAdminInput = TypeOf<typeof verifyAdminSchema>['params']
