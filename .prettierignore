@@ -25,3 +25,4 @@ yarn-error.log*
 jest.config.ts
 lerna.json
 webpack.config.js
+tsconfig.json

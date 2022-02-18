@@ -1,0 +1,624 @@
+{
+  "info": {
+    "_postman_id": "caf6c30c-83f4-4d9b-9f7a-1b5ac05cd55a",
+    "name": "Mygomtech API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Administrator",
+      "item": [
+        {
+          "name": "Register administrator",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "let username = pm.variables.replaceIn(\"{{$randomUsername}}\")",
+                  "",
+                  "pm.environment.set(\"adminUsername\", adminUsername)",
+                  "",
+                  "pm.environment.set(\"email\", `${username.toLowerCase()}.${lastName.toLowerCase()}@example.com`)",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"adminUsername\": \"{{adminUsername}}\",\n    \"adminPassword\": \"{{adminPassword}}\",\n    \"adminEmail\": \"{{adminEmail}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9003/admin/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9003",
+              "path": ["admin", "register"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"adminUsername\": \"{{adminUsername}}\",\n    \"adminPassword\": \"{{adminPassword}}\",\n    \"adminEmail\": \"{{adminEmail}}\"\n    }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:9003/api/register",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "9003",
+                  "path": ["api", "register"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "\"Administrator successfully created\""
+            },
+            {
+              "name": "Passwords do not match",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"username\": \"{{username}}\",\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\",\n    \"passwordConfirmation\": \"{{password}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{host}}/admin/register",
+                  "host": ["{{host}}"],
+                  "path": ["admin", "register"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "[\n    {\n        \"code\": \"custom\",\n        \"message\": \"Passwords do not match\",\n        \"path\": [\n            \"body\",\n            \"passwordConfirmation\"\n        ]\n    }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Login administrator",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "let username = pm.variables.replaceIn(\"{{$randomUsername}}\")",
+                  "",
+                  "pm.environment.set(\"username\", username)",
+                  "",
+                  "pm.environment.set(\"email\", `${username.toLowerCase()}.${lastName.toLowerCase()}@example.com`)",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"adminUsername\": \"{{adminUsername}}\",\n    \"adminPassword\": \"{{adminPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9003/admin/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9003",
+              "path": ["admin", "login"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"adminUsername\": \"{{adminUsername}}\",\n    \"adminPassword\": \"{{adminPassword}}\"\n    }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:9003/api/register",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "9003",
+                  "path": ["api", "register"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "\"Administrator successfully created\""
+            },
+            {
+              "name": "Passwords do not match",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"adminUsername\": \"{{adminUsername}}\",\n    \"adminPassword\": \"{{adminPassword}}\"\n    }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{host}}/admin/register",
+                  "host": ["{{host}}"],
+                  "path": ["admin", "register"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "[\n    {\n        \"code\": \"custom\",\n        \"message\": \"Passwords do not match\",\n        \"path\": [\n            \"body\",\n            \"passwordConfirmation\"\n        ]\n    }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Refresh administrator",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "let username = pm.variables.replaceIn(\"{{$randomUsername}}\")",
+                  "",
+                  "pm.environment.set(\"username\", username)",
+                  "",
+                  "pm.environment.set(\"email\", `${username.toLowerCase()}.${lastName.toLowerCase()}@example.com`)",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9003/admin/refresh",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9003",
+              "path": ["admin", "refresh"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:9003/api/register",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "9003",
+                  "path": ["api", "register"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "\"Administrator successfully created\""
+            },
+            {
+              "name": "Cookie error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{host}}/admin/register",
+                  "host": ["{{host}}"],
+                  "path": ["admin", "register"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "[\n    {\n        \"code\": \"custom\",\n        \"message\": \"Passwords do not match\",\n        \"path\": [\n            \"body\",\n            \"passwordConfirmation\"\n        ]\n    }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Logout administrator",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "let username = pm.variables.replaceIn(\"{{$randomUsername}}\")",
+                  "",
+                  "pm.environment.set(\"username\", username)",
+                  "",
+                  "pm.environment.set(\"email\", `${username.toLowerCase()}.${lastName.toLowerCase()}@example.com`)",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"{{username}}\",\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\",\n    \"passwordConfirmation\": \"{{password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9003/admin/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9003",
+              "path": ["admin", "login"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"adminUsername\": \"{{adminUsername}}\",\n    \"adminPassword\": \"{{adminPassword}}\"\n    }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:9003/api/register",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "9003",
+                  "path": ["api", "register"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "\"Administrator successfully created\""
+            }
+          ]
+        },
+        {
+          "name": "Me",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/admin/auth",
+              "host": ["{{host}}"],
+              "path": ["admin", "auth"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Employee",
+      "item": [
+        {
+          "name": "Create",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = JSON.parse(responseBody);",
+                  "postman.setEnvironmentVariable(\"accessToken\", jsonData.accessToken)",
+                  "postman.setEnvironmentVariable(\"refreshToken\", jsonData.refreshToken);"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"emplName\": \"{{emplName}}\",\n    \"emplRole\": \"{{emplRole}}\",\n    \"emplEmail\": \"{{emplEmail}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9003/api/create",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9003",
+              "path": ["api", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = JSON.parse(responseBody);",
+                  "postman.setEnvironmentVariable(\"accessToken\", jsonData.accessToken)",
+                  "postman.setEnvironmentVariable(\"refreshToken\", jsonData.refreshToken);"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"emplId\": \"{{emplId}}\",\n    \"emplName\": \"{{emplName}}\",\n    \"emplRole\": \"{{emplRole}}\",\n    \"emplEmail\": \"{{emplEmail}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9003/api/create",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9003",
+              "path": ["api", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Read (1)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = JSON.parse(responseBody);",
+                  "postman.setEnvironmentVariable(\"accessToken\", jsonData.accessToken)",
+                  "postman.setEnvironmentVariable(\"refreshToken\", jsonData.refreshToken);"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"emplId\": \"{{emplId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9003/api/id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9003",
+              "path": ["api", "id"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = JSON.parse(responseBody);",
+                  "postman.setEnvironmentVariable(\"accessToken\", jsonData.accessToken)",
+                  "postman.setEnvironmentVariable(\"refreshToken\", jsonData.refreshToken);"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"emplEmail\": \"{{emplEmail}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9003/api/delete",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9003",
+              "path": ["api", "delete"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Read (all)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = JSON.parse(responseBody);",
+                  "postman.setEnvironmentVariable(\"accessToken\", jsonData.accessToken)",
+                  "postman.setEnvironmentVariable(\"refreshToken\", jsonData.refreshToken);"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9003/api/ids",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9003",
+              "path": ["api", "ids"]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Employee CRUD operations"
+    }
+  ]
+}

@@ -3,6 +3,7 @@ import fsPromises from 'fs/promises'
 import bcrypt from 'bcrypt'
 import administrators from '../model/administrators.json'
 import path from 'path'
+import { CreateAdminInput } from '../scheme/administrators.schema'
 
 // modeled after useState in react with admins & setAdmins
 const adminDB = {
@@ -12,7 +13,10 @@ const adminDB = {
   }
 }
 
-const handleAdminRegistration = async (req: Request, res: Response) => {
+export default async function handleAdminRegistration(
+  req: Request<Record<string, never>, Record<string, never>, CreateAdminInput>,
+  res: Response
+) {
   // destructure the request body
   const { adminUsername, adminPassword, adminEmail } = req.body
 
@@ -23,7 +27,14 @@ const handleAdminRegistration = async (req: Request, res: Response) => {
   const duplicateEmail = administrators.find((admin: any) => admin.email === adminEmail)
 
   // send status 409: 'request conflict - username is already taken'
-  if (duplicateUsername || duplicateEmail) return res.sendStatus(409)
+  if (duplicateUsername) {
+    return res.sendStatus(409)
+  }
+
+  // send status 409: 'request conflict - email is already taken'
+  if (duplicateEmail) {
+    return res.sendStatus(409)
+  }
 
   // create a new administrator
   try {
@@ -54,5 +65,3 @@ const handleAdminRegistration = async (req: Request, res: Response) => {
     res.status(500).json({ message: err })
   }
 }
-
-export default handleAdminRegistration

@@ -1,1 +1,9 @@
-[{"id":1,"username":"admin","password":"$2b$10$1u4D0qE5riDfc9LV7QUrBu4L1AHAQ6VdD61hrFoox4bjymE1NhW7u","email":"user@organization.com","refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNjQ1MTA2OTg2LCJleHAiOjE2NDUxMDcwMDF9.A4lIyWdvFZX_xfwWmXbvPXpBWtb4BbfNMB9vK-G9NpE"}]
+[
+  {
+    "id": 1,
+    "username": "admin",
+    "password": "$2b$10$1u4D0qE5riDfc9LV7QUrBu4L1AHAQ6VdD61hrFoox4bjymE1NhW7u",
+    "email": "user@organization.com",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNjQ1MTI3NjUyLCJleHAiOjE2NDUxMjc2Njd9.UNxqHdy3StQpDgqS4AbGVM19sHNit5JnLqf8U5Lq2LE"
+  }
+]

@@ -7,6 +7,7 @@
     "type": "git",
     "url": "git+https://github.com/alfredmelson/mygomtech_server.git"
   },
+  "main": "src/server.ts",
   "scripts": {
     "build-ts": "tsc",
     "build": "yarn build-ts && yarn lint-ts",
@@ -14,7 +15,7 @@
     "clean-dist": "rimraf dist",
     "clean-test": "rimraf coverage",
     "debug": "yarn build && yarn watch-debug",
-    "dev": "tsnd --respawn src/server.ts",
+    "dev": "tsnd --respawn --transpile-only src/server.ts",
     "format": "prettier --write \"src/**/*.{ts,json}\"",
     "lint-es": "eslint -f unix \"src/**/*.ts\"",
     "lint-ts": "tsc --noEmit && eslint \"**/*.ts\" --quiet --fix",
@@ -31,15 +32,16 @@
     "cors": "^2.8.5",
     "date-fns": "^2.28.0",
     "dotenv": "^16.0.0",
-    "express": "^4.17.3",
+    "express": "next",
     "express-validator": "^6.14.0",
     "jsonwebtoken": "^8.5.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "zod": "^3.11.6"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/body-parser": "1.19.2",
-    "@types/concurrently": "^7.0.0",
+    "@types/config": "^0.0.41",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.12",
     "@types/eslint": "^8.4.1",
@@ -54,7 +56,6 @@
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.12.0",
     "@typescript-eslint/parser": "^5.12.0",
-    "concurrently": "^7.0.0",
     "eslint": "^8.9.0",
     "eslint-config-prettier": "^8.3.0",
     "jest": "^27.5.1",
@@ -66,8 +67,5 @@
     "ts-node": "^10.5.0",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.5.5"
-  },
-  "engines": {
-    "node": ">=14.0.0"
   }
 }

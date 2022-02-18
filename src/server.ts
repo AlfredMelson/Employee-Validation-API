@@ -1,7 +1,10 @@
 import app from './app'
 
-// Start Express server
-const server = app.listen(9003, 'localhost')
-console.log('server is running on port:', 9003)
+const port = 9003
+
+// Express server
+const server = app.listen(port, () => {
+  console.log('Express server has been started on port ', port)
+})
 
 export default server

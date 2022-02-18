@@ -19,8 +19,12 @@ import {
   emplUpdateRoute
 } from './routes/empl'
 import corsOptions from './config/corsOptions'
+
 // import { logger } from './middleware/logEvents'
 // import errorHandler from './middleware/errorHandler'
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotenv').config()
 
 const app = express()
 
