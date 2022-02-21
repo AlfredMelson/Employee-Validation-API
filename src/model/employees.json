@@ -1,5 +1,12 @@
 [
   {
+    "id": "1",
+    "name": "Jonas Jonaitis",
+    "role": "admin",
+    "email": "email123",
+    "createdAt": "2022-02-19T14:58:39.324Z"
+  },
+  {
     "id": "2",
     "name": "Petras Petraitis",
     "role": "read",
@@ -61,12 +68,5 @@
     "role": "read",
     "email": "pass1",
     "createdAt": "2022-02-15T10:01:27.601Z"
-  },
-  {
-    "id": "1",
-    "name": "Jonas Jonaitis",
-    "role": "admin",
-    "email": "jones+anthing",
-    "createdAt": "2022-02-19T14:58:39.324Z"
   }
 ]

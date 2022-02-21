@@ -1,5 +1,5 @@
 import request from 'supertest'
-import app from '../src/app'
+import app from '../../src/app'
 
 describe('GET /admin/logout', () => {
   it('should return 200 OK', () => {
