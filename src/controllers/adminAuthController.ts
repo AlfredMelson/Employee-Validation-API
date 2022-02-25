@@ -36,8 +36,17 @@ const handleAdminAuthentication = async (req: Request, res: Response) => {
 
     // Purpose: save refreshToken with the current admin. This will allow for the creation of a logout route that will invalidate the refreshToken when an admin logs out.  RefreshToken with the current admin is stored in the database and can be cross referenced when it is sent back to create another access token.
 
+    // create currentAdmin object with the foundAdmin and refreshToken set to ''
+    const loggedInAdmin = {
+      id: foundAdmin.id,
+      username: foundAdmin.username,
+      password: foundAdmin.password,
+      email: foundAdmin.email,
+      refreshToken: refreshToken
+    }
+
     // create currentAdmin object with the foundAdmin and their refreshToken
-    const currentAdmin = { ...foundAdmin, refreshToken }
+    // const currentAdmin = { ...foundAdmin, refreshToken }
 
     // create an array of the other admins in the database that are not the current admin
     const otherAdmin = adminDB.admins.filter(admin => admin.username !== foundAdmin.username)
@@ -45,10 +54,10 @@ const handleAdminAuthentication = async (req: Request, res: Response) => {
     // check the number of objects
     if (Object.keys(adminDB.admins).length <= 1) {
       // pass in the current admin as the sole admin to setAdmins
-      adminDB.setAdmins([currentAdmin])
+      adminDB.setAdmins([loggedInAdmin])
     } else {
       // pass in the other admins along with the current admin to setAdmins
-      adminDB.setAdmins([...otherAdmin, currentAdmin])
+      adminDB.setAdmins([...otherAdmin, loggedInAdmin])
     }
 
     // write the current user to the database
