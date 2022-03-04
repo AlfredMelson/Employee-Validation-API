@@ -3,81 +3,92 @@ enum Roles {
   write = 'write',
   admin = 'admin'
 }
-interface IEmployee {
+export interface Empl {
   id: string
-  name: string
-  role: Roles
+  firstname: string
+  lastname: string
+  role: string
   email: string
   createdAt: string
 }
 
-export const employees: IEmployee[] = [
+export const employees: Empl[] = [
   {
     id: '1',
-    name: 'Jonas Jonaitis',
+    firstname: 'Jonas',
+    lastname: 'Jonaitis',
     role: Roles.admin,
     email: 'email123',
     createdAt: new Date().toISOString()
   },
   {
     id: '2',
-    name: 'Petras Petraitis',
+    firstname: 'Petras',
+    lastname: 'Petraitis',
     role: Roles.read,
     email: 'test@test.com',
     createdAt: new Date(new Date().setMonth(new Date().getMonth() - 2)).toISOString()
   },
   {
     id: '3',
-    name: 'Povilas Povilaitis',
+    firstname: 'Povilas',
+    lastname: 'Povilaitis',
     role: Roles.read,
     email: 'email123',
     createdAt: new Date().toISOString()
   },
   {
     id: '4',
-    name: 'Juozas Juozaitis',
+    firstname: 'Juozas',
+    lastname: 'Juozaitis',
     role: Roles.admin,
     email: 'test@gmail.com',
     createdAt: new Date().toISOString()
   },
   {
     id: '5',
-    name: 'Tomas Tomaitis',
+    firstname: 'Tomas',
+    lastname: 'Tomaitis',
     role: Roles.admin,
     email: 'Vardenis2000@gmail.com',
     createdAt: new Date().toISOString()
   },
   {
     id: '6',
-    name: 'Giedrius Giedraitis',
+    firstname: 'Giedrius',
+    lastname: 'Giedraitis',
     role: Roles.write,
     email: 'Vardenis2@gmail.com',
     createdAt: new Date().toISOString()
   },
   {
     id: '7',
-    name: 'Justas Justaitis',
+    firstname: 'Justas',
+    lastname: 'Justaitis',
     role: Roles.admin,
     email: 'email@gmail.com',
     createdAt: new Date().toISOString()
   },
   {
     id: '8',
-    name: 'Laurynas Laurinaitis',
+    firstname: 'Laurynas',
+    lastname: 'Laurinaitis',
     role: Roles.admin,
     email: 'pavardenis321@gmail.com',
     createdAt: new Date().toISOString()
   },
   {
     id: '9',
-    name: 'Gerda Gerdaitė',
+    firstname: 'Gerda',
+    lastname: 'Gerdaitė',
     role: Roles.write,
     email: 'discordemail123@gmail.com.',
     createdAt: new Date().toISOString()
   },
   {
     id: '10',
-    name: 'Kristina Kristinaitė',
+    firstname: 'Kristina',
+    lastname: 'Kristinaitė',
     role: Roles.read,
     email: 'pass1',
     createdAt: new Date().toISOString()

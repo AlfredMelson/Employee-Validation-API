@@ -1,10 +1,10 @@
 import type { Request, Response } from 'express'
 import employees from '../model/employees.json'
+import { Empl } from './../model/employees'
 
-// modeled after useState in react with empls & setEmpls
 const emplDB = {
   empls: employees,
-  setEmpls: function (data: any) {
+  setEmpls: function (data: Empl[]) {
     this.empls = data
   }
 }

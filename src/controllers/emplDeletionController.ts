@@ -2,18 +2,18 @@ import type { Request, Response } from 'express'
 import fsPromises from 'fs/promises'
 import path from 'path'
 import employees from '../model/employees.json'
+import { Empl } from './../model/employees'
 
-// modeled after useState in react with empls & setEmpls
 const emplDB = {
   empls: employees,
-  setEmpls: function (data: any) {
+  setEmpls: function (data: Empl[]) {
     this.empls = data
   }
 }
 
 const handleEmplDeletion = async (req: Request, res: Response) => {
   // destructure the request body
-  const { emplEmail } = req.body
+  const { emplFirstname, emplLastname, emplEmail } = req.body
 
   // check for empl(email) exists in the database
   const foundEmpl = emplDB.empls.find((empl: any) => empl.email === emplEmail)
@@ -38,7 +38,7 @@ const handleEmplDeletion = async (req: Request, res: Response) => {
     )
 
     // send status 201: 'request succeeded, and a new resource was updated as a result'
-    res.status(201).json({ success: `${emplEmail} has been deleted.` })
+    res.status(201).json({ success: `${emplFirstname} ${emplLastname} has been deleted.` })
   } catch (err) {
     // send status 500: 'server has encountered a situation it does not know how to handle'
     res.status(500).json({ message: err })

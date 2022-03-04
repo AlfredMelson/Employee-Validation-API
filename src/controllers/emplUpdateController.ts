@@ -2,18 +2,18 @@ import type { Request, Response } from 'express'
 import fsPromises from 'fs/promises'
 import path from 'path'
 import employees from '../model/employees.json'
+import { Empl } from './../model/employees'
 
-// modeled after useState in react with empls & setEmpls
 const emplDB = {
   empls: employees,
-  setEmpls: function (data: any) {
+  setEmpls: function (data: Empl[]) {
     this.empls = data
   }
 }
 
 const handleEmployeeUpdate = async (req: Request, res: Response) => {
   // destructure the request body
-  const { emplId, emplName, emplRole, emplEmail } = req.body
+  const { emplId, emplFirstname, emplLastname, emplRole, emplEmail } = req.body
 
   // check for empl(email) exists in the database
   const foundEmpl = emplDB.empls.find(empl => empl.id === emplId)
@@ -32,7 +32,8 @@ const handleEmployeeUpdate = async (req: Request, res: Response) => {
     // store the new empl with the updated email address
     const updatedEmpl = {
       id: emplId,
-      name: emplName,
+      firstname: emplFirstname,
+      lastname: emplLastname,
       role: emplRole,
       email: emplEmail,
       createdAt: updatedDate
@@ -50,7 +51,7 @@ const handleEmployeeUpdate = async (req: Request, res: Response) => {
     )
 
     // send status 201: 'request succeeded, and a new resource was updated as a result'
-    res.status(201).json({ success: `${emplName} has been updated.` })
+    res.status(201).json({ success: `${emplFirstname} ${emplLastname} has been updated.` })
   } catch (err) {
     // send status 500: 'server has encountered a situation it does not know how to handle'
     res.status(500).json({ message: err })

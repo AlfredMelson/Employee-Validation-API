@@ -1,4 +1,4 @@
-import type { Request, NextFunction } from 'express'
+import type { Request, NextFunction, Response } from 'express'
 import { format } from 'date-fns'
 import { v4 as uuid } from 'uuid'
 import { existsSync } from 'fs'
@@ -20,7 +20,7 @@ export const logEvents = async (message: string, logName: string) => {
   }
 }
 
-export const logger = (req: Request, next: NextFunction) => {
+export const logger = (req: Request, _res: Response, next: NextFunction) => {
   logEvents(`${req.method}\t${req.headers.origin}\t${req.url}`, 'reqLog.txt')
   console.log(`${req.method} ${req.path}`)
   next()
