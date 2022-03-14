@@ -11,7 +11,7 @@ const emplDB = {
 }
 
 export const getAllEmployees = (_req: Request, res: Response) => {
-  console.log('getAllEmployees')
+  console.log('employeesController: getAllEmployees request')
 
   res.json(emplDB.empls)
 }

@@ -3,7 +3,6 @@ import fsPromises from 'fs/promises'
 import administrators from '../model/administrators.json'
 import path from 'path'
 
-// modeled after useState in react with admins & setAdmins
 const adminDB = {
   admins: administrators,
   setAdmins: function (data: any) {
@@ -14,17 +13,23 @@ const adminDB = {
 const handleAdminLogout = async (req: Request, res: Response) => {
   // NOTE: FED needs to delete the accessToken in clientside memory
 
-  // set cookies to the request cookies
-  const cookies = req.cookies
+  console.log('adminLogoutController - req', req)
+
+  // define cookies and grab it if it exists
+  const cookies = req?.cookies
+  console.log('adminLogoutController - cookies', cookies)
 
   // check that there are no cookies or (optionally chaining) for a jwt property and send status 204 if true: 'no content to send for this request'
-  if (!cookies?.jwt) return res.sendStatus(204)
+  if (!cookies.jwt) return res.sendStatus(204)
 
   // define the refreshToken and set it equal to value received
   const refreshToken = cookies.jwt
 
-  // check for admin (username) exists in the database with a refreshToken
+  console.log('adminLogoutController - refreshToken', refreshToken)
+
+  // check if admin (username) exists in the database with a refreshToken
   const foundAdmin = adminDB.admins.find(admin => admin.refreshToken === refreshToken)
+  console.log('adminLogoutController - foundAdmin', foundAdmin)
 
   // if no foundAdmin proceed with clearing the cookie
   if (!foundAdmin) {
@@ -38,7 +43,7 @@ const handleAdminLogout = async (req: Request, res: Response) => {
   // At this point, the same refreshToken was found in the db, so proceed with deletion.
 
   // filter out found admin(id) to define otherAdmins
-  const otherAdmins = adminDB.admins.filter(admin => admin.id !== foundAdmin.id)
+  const otherAdmin = adminDB.admins.filter(admin => admin.id !== foundAdmin.id)
 
   // create currentAdmin object with the foundAdmin and refreshToken set to ''
   const loggedOutAdmin = {
@@ -46,15 +51,19 @@ const handleAdminLogout = async (req: Request, res: Response) => {
     username: foundAdmin.username,
     password: foundAdmin.password,
     email: foundAdmin.email,
-    refreshToken: ''
+    refreshToken: []
   }
 
-  console.log(loggedOutAdmin)
+  // check the number of admin in the database
+  if (Object.keys(otherAdmin).length === 1) {
+    // pass in the current admin as the sole admin to setAdmins
+    adminDB.setAdmins([loggedOutAdmin])
+  } else {
+    // pass in the other admins along with the current admin to setAdmins
+    adminDB.setAdmins([...otherAdmin, loggedOutAdmin])
+  }
 
-  // pass in the other admins along with the current admin to setAdmins
-  adminDB.setAdmins([...otherAdmins, loggedOutAdmin])
-
-  // write the current admin to the file (database)
+  // write the current user to the database
   await fsPromises.writeFile(
     // navigate from the current directory up and into the model directory, to administrators.json
     path.join(__dirname, '..', 'model', 'administrators.json'),

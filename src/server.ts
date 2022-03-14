@@ -1,13 +1,13 @@
 import express from 'express'
 import cors from 'cors'
-import verification from './middleware/verification'
+// import verification from './middleware/verification'
 import credentials from './middleware/credentials'
 import cookieParser from 'cookie-parser'
 import {
-  adminRegisterRoute,
+  // adminRegisterRoute,
   adminAuthRoute,
-  adminGetAllRoute,
-  adminRefreshRoute,
+  // adminGetAllRoute,
+  // adminRefreshRoute,
   adminLogoutRoute
 } from './routes/admin'
 import {
@@ -57,10 +57,10 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 // routes
-app.use('/admin', adminRegisterRoute)
+// app.use('/admin', adminRegisterRoute)
 app.use('/admin', adminAuthRoute)
-app.use('/admin', adminRefreshRoute)
-app.use('/admin', adminGetAllRoute)
+// app.use('/admin', adminRefreshRoute)
+// app.use('/admin', adminGetAllRoute)
 app.use('/admin', adminLogoutRoute)
 
 // routes after verification of jsonwebtoken
@@ -73,7 +73,7 @@ app.use('/api', emplDeletionRoute)
 // app.use('/employees', emplRoutes)
 
 // verification of jsonwebtoken
-app.use(verification)
+// app.use(verification)
 
 // dev catch-all (404)
 app.all('*', (req: Request, res: Response) => {
