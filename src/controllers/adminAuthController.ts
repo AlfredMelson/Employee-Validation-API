@@ -14,7 +14,6 @@ const adminDB = {
 const handleAdminAuthentication = async (req: Request, res: Response) => {
   // define cookies and grab it if it exists
   const cookies = req?.cookies
-  console.log(`cookie available at login: ${JSON.stringify(cookies)}`)
 
   // destructure the request body
   const { adminUsername, adminPassword } = req.body
@@ -48,22 +47,18 @@ const handleAdminAuthentication = async (req: Request, res: Response) => {
        3) If 1 & 2, reuse detection is needed to clear all refresh tokens when admin logs in
      */
       const refreshToken = cookies.jwt
-      console.log('refreshToken', refreshToken)
 
       // lookup refresh token in the database
       const foundToken = foundAdmin.refreshToken.find(admin => admin.includes(refreshToken))
 
       // Detected refresh token reuse!
       if (!foundToken) {
-        console.log('attempted refresh token reuse at login!')
-
-        // clear out ALL previous refresh tokens
+        // remove previous refresh tokens
         newRefreshTokenArray = []
       }
 
       res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true })
     }
-
     // Purpose: save refreshToken with the current admin. This will allow for the creation of a logout route that will invalidate the refreshToken when an admin logs out.  RefreshToken with the current admin is stored in the database and can be cross referenced when it is sent back to create another access token.
 
     // create currentAdmin object with the foundAdmin and refreshToken set to
@@ -87,15 +82,6 @@ const handleAdminAuthentication = async (req: Request, res: Response) => {
       adminDB.setAdmins(allAdmin)
     }
 
-    // write the current administrators to the database
-    await fsPromises.writeFile(
-      // navigate from the current directory up and into the model directory, to administrators.json
-      path.join(__dirname, '..', 'model', 'administrators.json'),
-
-      // specify the data to be written
-      JSON.stringify(adminDB.admins)
-    )
-
     // Purpose: send refreshToken in a cookie with httpOnly set to true, prohibiting javascript access. This method is more secure than storing refreshToken in local storage or another cookie that is available to javascript. NOTE: maxAge is set to 1 day via milliseconds
     res.cookie('jwt', newRefreshToken, {
       httpOnly: true,
@@ -105,12 +91,21 @@ const handleAdminAuthentication = async (req: Request, res: Response) => {
     })
 
     // accesstoken is sent as json, that the FED can use to authenticate the admin. FED needs to store this in memory (react context).
-    res.json({ accessToken })
+    res.json(accessToken)
 
     // send error status 401: 'unauthorized; response means unauthenticated' if password mismatch
   } else {
     res.sendStatus(401)
   }
+
+  // update the database with current administrators
+  await fsPromises.writeFile(
+    // navigate from the current directory up and into the model directory, to administrators.json
+    path.join(__dirname, '..', 'model', 'administrators.json'),
+
+    // specify the data to be written
+    JSON.stringify(adminDB.admins)
+  )
 }
 
 export default handleAdminAuthentication
