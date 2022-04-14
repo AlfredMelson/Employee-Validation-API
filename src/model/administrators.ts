@@ -1,12 +1,12 @@
-export interface Admin {
+export interface IAdmin {
   id: number
   username: string
   email: string
   password: string
-  refreshToken?: [string]
+  refreshToken?: string[]
 }
 
-export const administrators: Admin[] = [
+export const administrators: IAdmin[] = [
   {
     id: 1,
     username: 'admin',
