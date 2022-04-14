@@ -35,12 +35,12 @@ const handleAdminAuthentication = async (req: Request, res: Response) => {
     // create jwt refreshToken
     const newRefreshToken: string = createJwtRefreshToken(foundAdmin.username)
 
-    let newRefreshTokenArray = !cookies.jwt
+    let newRefreshTokenArray = !cookies?.jwt
       ? foundAdmin.refreshToken
-      : foundAdmin.refreshToken.filter((token: any) => token !== cookies.jwt)
+      : foundAdmin.refreshToken.filter(token => token !== cookies.jwt)
 
     // delete cookie
-    if (cookies.jwt) {
+    if (cookies?.jwt) {
       /* 
        Scenario added here: 
        1) Admin logs in but never utilises refresh token and does not logout 
@@ -48,13 +48,15 @@ const handleAdminAuthentication = async (req: Request, res: Response) => {
        3) If 1 & 2, reuse detection is needed to clear all refresh tokens when admin logs in
      */
       const refreshToken = cookies.jwt
+      console.log('refreshToken', refreshToken)
 
       // lookup refresh token in the database
-      const foundToken = adminDB.admins.find(admin => admin.refreshToken.includes(refreshToken))
+      const foundToken = foundAdmin.refreshToken.find(admin => admin.includes(refreshToken))
 
       // Detected refresh token reuse!
       if (!foundToken) {
         console.log('attempted refresh token reuse at login!')
+
         // clear out ALL previous refresh tokens
         newRefreshTokenArray = []
       }
@@ -68,10 +70,7 @@ const handleAdminAuthentication = async (req: Request, res: Response) => {
     const refreshTokenArray = [...newRefreshTokenArray, newRefreshToken]
 
     const authenticatedAdmin = {
-      id: foundAdmin.id,
-      username: foundAdmin.username,
-      password: foundAdmin.password,
-      email: foundAdmin.email,
+      ...foundAdmin,
       refreshToken: refreshTokenArray
     }
 

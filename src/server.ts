@@ -50,8 +50,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 // routes
-app.use('/admin', adminAuthRoute)
 app.use('/admin', adminLogoutRoute)
+app.use('/admin', adminAuthRoute)
 app.use('/admin', adminRefreshRoute)
 
 // routes after verification of jsonwebtoken
