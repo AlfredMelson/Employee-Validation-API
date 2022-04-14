@@ -4,8 +4,8 @@
   "license": "MIT",
   "author": "Alfred Melson",
   "tags": [
-    "user-management",
-    "user-registration",
+    "employee-management",
+    "employee-registration",
     "registration-validation"
   ],
   "keywords": [
@@ -22,7 +22,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alfredmelson/registrant_validation_server.git"
+    "url": "git+https://github.com/alfredmelson/employee_validation_server.git"
   },
   "main": "src/server.ts",
   "scripts": {

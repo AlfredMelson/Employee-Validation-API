@@ -13,9 +13,9 @@ const adminDB = {
 const handleAdminLogout = async (req: Request, res: Response) => {
   // NOTE: FED needs to delete the accessToken in clientside memory
 
-  // set cookies to the request cookies
-  const cookies = req.cookies
-  console.log(`cookie available at logout: ${JSON.stringify(cookies)}`)
+  // define cookies and grab it if it exists
+  const cookies = req?.cookies
+  console.log(`cookie available at login: ${JSON.stringify(cookies)}`)
 
   // check that there are no cookies or (optionally chaining) for a jwt property and send status 204 if true: 'no content to send for this request'
   if (!cookies.jwt) return res.sendStatus(204)
@@ -37,14 +37,14 @@ const handleAdminLogout = async (req: Request, res: Response) => {
 
   // The same refreshToken was found in the db, so proceed with deletion.
 
+  const newRefreshTokenArray = foundAdmin.refreshToken.filter(admin => admin !== refreshToken)
+
   // create currentAdmin object with the foundAdmin and refreshToken set to ''
   const loggedOutAdmin = {
-    id: foundAdmin.id,
-    username: foundAdmin.username,
-    password: foundAdmin.password,
-    email: foundAdmin.email,
-    refreshToken: []
+    ...foundAdmin,
+    refreshToken: newRefreshTokenArray
   }
+  console.log('loggedOutAdmin', loggedOutAdmin)
 
   // create an array of the other admins in the database that are not the hacked admin
   const otherAdmin = adminDB.admins.filter(admin => admin.id !== foundAdmin.id)
@@ -59,6 +59,15 @@ const handleAdminLogout = async (req: Request, res: Response) => {
     adminDB.setAdmins(allAdmin)
   }
 
+  // delete cookie
+  res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true })
+
+  // accesstoken is sent as json, that the FED can use to authenticate the admin. FED needs to store this in memory (react context).
+  res.json(foundAdmin)
+
+  // return and send status 204 successful but 'no content to send for this request'
+  res.sendStatus(204)
+
   // write the current user to the database
   await fsPromises.writeFile(
     // navigate from the current directory up and into the model directory, to administrators.json
@@ -67,12 +76,6 @@ const handleAdminLogout = async (req: Request, res: Response) => {
     // specify the data to be written
     JSON.stringify(adminDB.admins)
   )
-
-  // delete cookie
-  res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true })
-
-  // return and send status 204 successful but 'no content to send for this request'
-  res.sendStatus(204)
 }
 
 export default handleAdminLogout

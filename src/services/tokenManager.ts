@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken'
 
-export const createJwtAccessToken = (admin: string) =>
+export const createJwtAccessToken = (administrator: string) =>
   jwt.sign(
     // first: payload will be the foundAdmin username object
-    { username: admin },
+    { username: administrator },
 
     // second: access secret defined in .env
     // process.env.ACCESS_TOKEN_SECRET,
@@ -13,10 +13,10 @@ export const createJwtAccessToken = (admin: string) =>
     { expiresIn: '1d' }
   )
 
-export const createJwtRefreshToken = (admin: string) =>
+export const createJwtRefreshToken = (administrator: string) =>
   jwt.sign(
     // first: payload will be the foundAdmin username object
-    { username: admin },
+    { username: administrator },
 
     // second: refresh secret defined in .env
     // process.env.REFRESH_TOKEN_SECRET,
