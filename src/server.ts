@@ -3,13 +3,7 @@ import cors from 'cors'
 // import verification from './middleware/verification'
 import credentials from './middleware/credentials'
 import cookieParser from 'cookie-parser'
-import {
-  // adminRegisterRoute,
-  adminAuthRoute,
-  // adminGetAllRoute,
-  // adminRefreshRoute,
-  adminLogoutRoute
-} from './routes/admin'
+import { adminAuthRoute, adminRefreshRoute, adminLogoutRoute } from './routes/admin'
 import {
   emplDeletionRoute,
   emplGetAllRoute,
@@ -17,7 +11,6 @@ import {
   emplRegisterRoute,
   emplUpdateRoute
 } from './routes/empl'
-// import emplRoutes from './routes/api/employees'
 import corsOptions from './config/corsOptions'
 import path from 'path'
 import { logger } from './middleware/logEvents'
@@ -57,11 +50,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 // routes
-// app.use('/admin', adminRegisterRoute)
 app.use('/admin', adminAuthRoute)
-// app.use('/admin', adminRefreshRoute)
-// app.use('/admin', adminGetAllRoute)
 app.use('/admin', adminLogoutRoute)
+app.use('/admin', adminRefreshRoute)
 
 // routes after verification of jsonwebtoken
 app.use('/api', emplGetOneRoute)
@@ -69,8 +60,6 @@ app.use('/api', emplGetAllRoute)
 app.use('/api', emplRegisterRoute)
 app.use('/api', emplUpdateRoute)
 app.use('/api', emplDeletionRoute)
-
-// app.use('/employees', emplRoutes)
 
 // verification of jsonwebtoken
 // app.use(verification)

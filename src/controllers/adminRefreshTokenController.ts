@@ -3,9 +3,9 @@ import jwt from 'jsonwebtoken'
 import administrators from '../model/administrators.json'
 import fsPromises from 'fs/promises'
 import path from 'path'
-import { createJwtRefreshToken } from '../services/tokenManager'
+import { createJwtAccessToken, createJwtRefreshToken } from '../services/tokenManager'
+import { IAdmin } from '../model/administrators'
 
-// modeled after useState in react with admins & setAdmins
 const adminDB = {
   admins: administrators,
   setAdmins: function (data: any) {
@@ -16,22 +16,21 @@ const adminDB = {
 const handleAdminRefreshToken = (req: Request, res: Response) => {
   // set cookies to the request cookies
   const cookies = req.cookies
+  console.log(`cookie available at refresh: ${JSON.stringify(cookies)}`)
 
   // check that there are no cookies or "optionally chained" jwt property and send status 401 if true: 'unauthorized; response means unauthenticated'
   if (!cookies?.jwt) return res.sendStatus(401)
 
-  // define the refreshToken and set it equal to the value within the cookie
+  // set refreshToken equal to the value within the cookie
   const refreshToken = cookies.jwt
 
-  // delte the cookie after the data has been previously set to refreshToken
+  // delete the cookie after the data has updated the refreshToken
   res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true })
 
-  // check for admin(username) exists in the database with a refreshToken
+  // check if admin exists in the database with the refreshToken received
   const foundAdmin = adminDB.admins.find(admin => admin.refreshToken === refreshToken)
 
-  console.log('foundAdmin', foundAdmin)
-
-  // check if cookie was received but the admin linked to the refreshToken was not found, meaning that the refreshToken has already been invalidated.  Specifically, removed from the refreshToken array in the db
+  // Reuse of refreshToken Detected: 1. Decode the refreshToken and look for username. 2. If found delete all refreshToekens assocated with that account.
   if (!foundAdmin) {
     // token verification using jwt.verify
     jwt.verify(
@@ -42,37 +41,40 @@ const handleAdminRefreshToken = (req: Request, res: Response) => {
       // process.env.REFRESH_TOKEN_SECRET,
       'a97a6109f424c526929b5ea4d2a9d17bf36ff15f5f7a610df6f0cad5fdaa58d670a184287054620245017ce1ff5f22c79ee21ef016e6b586e62e6ace5aa73040',
 
-      // third: callback with error and decoded options
-      async (err: any, decoded: any) => {
-        // if the refreshToken is expired send status 403: 'forbidden; no access rights to the content' if no foundAdmin
-        if (err) return res.sendStatus(403)
+      // third: callback with error and decoded options via async call to the database
+      async (error: any, decoded: any) => {
+        // An error will be thrown if the refreshToken cannot be decoded and status 403 is sent: 'forbidden; no access rights to the content'
+        if (error) return res.sendStatus(403)
 
-        // however, if its still a valid refreshToken and someone is attempting to reuse it, then we know there is a problem.  We find the username previously saved in the refreshToken and remove all the refreshTokens associated with that username
+        // Handle a hack: we now know that someone is attempting to use an invalidated refreshToken (because it was used before).  With the refreshToekn rotation in place, we are able to invalidate a token, letting us know that this is a reuse attempt; which we don't want.
 
+        // Identify the username previously saved in the refreshToken and remove all the refreshTokens associated with that username.
         const adminHacked = adminDB.admins.find(admin => admin.username === decoded.username)
 
+        // There will be refreshToken for each device that the admin has logged into. If we detect reuse, the admin is forced to log in again on each device as soon as their access toekn expires.  Note: the admin could be logged out faster by also removing the accessToken from the database.
+        const hackedAdminRefreshTokenArray: string[] = []
+
+        // recreate the hacked admin and set refreshToken to an empty array
         if (adminHacked) {
-          console.log('adminHacked', adminHacked)
-
-          // filter out found admin(id) to define otherAdmins
-          const otherAdmin = adminDB.admins.filter(admin => admin.id !== adminHacked.id)
-
-          // create hacked admin object with the foundAdmin and refreshToken set to ''
-          const hackedAdmin = {
+          const hackedAdmin: IAdmin = {
             id: adminHacked.id,
             username: adminHacked.username,
             password: adminHacked.password,
             email: adminHacked.email,
-            refreshToken: []
+            refreshToken: hackedAdminRefreshTokenArray
           }
 
-          // check the number of objects
-          if (Object.keys(adminDB.admins).length <= 1) {
+          // create an array of the other admins in the database that are not the hacked admin
+          const otherAdmin = adminDB.admins.filter(admin => admin.id !== adminHacked.id)
+
+          // check the number of admins in the database
+          if (adminDB.admins.length <= 1) {
             // pass in the current admin as the sole admin to setAdmins
             adminDB.setAdmins(hackedAdmin)
           } else {
             // pass in the other admins along with the current admin to setAdmins
-            adminDB.setAdmins([...otherAdmin, hackedAdmin])
+            const allAdmin = [...otherAdmin, hackedAdmin]
+            adminDB.setAdmins(allAdmin)
           }
 
           // write the current user to the database
@@ -87,15 +89,14 @@ const handleAdminRefreshToken = (req: Request, res: Response) => {
       }
     )
 
-    //Forbidden
+    // status 403 is sent: 'forbidden; no access rights to the content'
     return res.sendStatus(403)
   }
 
-  // we have found the refreshToken, its valid and we are ready to reissue a new refreshToken
-  // we still need to remove the old refreshToken from the refreshToken array in the db
-  const newRefreshTokenArray = adminDB.admins.filter(
-    admin => admin.refreshToken !== foundAdmin.refreshToken
-  )
+  // Handle the found refreshToken and its valid and ready to issue a new refreshToken. But first the old refreshToken needs to be removed from the refreshToken array in the db
+  const newRefreshTokenArray = foundAdmin.refreshToken.filter(admin => admin !== refreshToken)
+
+  console.log('newRefreshTokenArray', newRefreshTokenArray)
 
   // token verification using jwt.verify
   jwt.verify(
@@ -106,16 +107,12 @@ const handleAdminRefreshToken = (req: Request, res: Response) => {
     // process.env.REFRESH_TOKEN_SECRET,
     'a97a6109f424c526929b5ea4d2a9d17bf36ff15f5f7a610df6f0cad5fdaa58d670a184287054620245017ce1ff5f22c79ee21ef016e6b586e62e6ace5aa73040',
 
-    // third: callback with error and decoded options
-    async (err: any, decoded: any) => {
-      if (err) {
-        console.log('expired refresh token')
-
+    // third: callback with error and decoded options via async call to the database
+    async (error: any, decoded: any) => {
+      if (error) {
         // handle receiving an expired refreshToken that is being replaced
-        // filter out found admin(id) to define otherAdmins
-        const otherAdmin = adminDB.admins.filter(admin => admin.id !== foundAdmin.id)
 
-        // create hacked admin object with the foundAdmin and refreshToken set to ''
+        // recreate the found admin and set refreshToken to the new refreshToken array
         const updatedfoundAdmin = {
           id: foundAdmin.id,
           username: foundAdmin.username,
@@ -124,13 +121,17 @@ const handleAdminRefreshToken = (req: Request, res: Response) => {
           refreshToken: [...newRefreshTokenArray]
         }
 
-        // check the number of objects
-        if (Object.keys(adminDB.admins).length <= 1) {
+        // create an array of the other admins in the database that are not the found admin
+        const otherAdmin = adminDB.admins.filter(admin => admin.id !== foundAdmin.id)
+
+        // check the number of admins in the database
+        if (adminDB.admins.length <= 1) {
           // pass in the current admin as the sole admin to setAdmins
           adminDB.setAdmins(updatedfoundAdmin)
         } else {
           // pass in the other admins along with the current admin to setAdmins
-          adminDB.setAdmins([...otherAdmin, updatedfoundAdmin])
+          const allAdmin = [...otherAdmin, updatedfoundAdmin]
+          adminDB.setAdmins(allAdmin)
         }
 
         // write the current user to the database
@@ -144,20 +145,12 @@ const handleAdminRefreshToken = (req: Request, res: Response) => {
       }
 
       // send status 403: 'forbidden; no access rights to the content'; ie invalid token or the foundUser username is not the same as the decoded username
-      if (err || foundAdmin.username !== decoded.username) return res.sendStatus(403)
+      if (error || foundAdmin.username !== decoded.username) return res.sendStatus(403)
 
-      // refreshToken was still valid and the username is the same as the decoded username, so we can issue a new accessToken and refreshToken
+      // refreshToken was still valid and the username is the same as the decoded username; issue a new accessToken and refreshToken. Set the admin equal to the decoded username (passed in the jwt) along with the accessToken
 
-      // set the admin equal to the decoded username (passed in the jwt) along with the accessToken
-      const accessToken = jwt.sign(
-        { username: decoded.username },
-
-        // process.env.ACCESS_TOKEN_SECRET,
-        '49d602b423a56b281168f50b58d444af414c819ee9d75ff674e6668361123626fc4a67a07e859d76fee75c1fd7c7071b1d28bc798f6e47835d72f8e48ab77972',
-        {
-          expiresIn: '15s'
-        }
-      )
+      // create new accessToken
+      const accessToken = createJwtAccessToken(decoded.username)
 
       // create new jwt refreshToken
       const newRefreshToken = createJwtRefreshToken(foundAdmin.username)
@@ -205,8 +198,8 @@ const handleAdminRefreshToken = (req: Request, res: Response) => {
         maxAge: 24 * 60 * 60 * 1000
       })
 
-      // accesstoken is sent as json, that the FED can use to authenticate the admin. FED needs to store this in memory.
-      res.json({ accessToken })
+      // accesstoken is sent as json, that the FED can use to authenticate the admin. NOTE: FED needs to store this in memory.
+      res.json(accessToken)
     }
   )
 }

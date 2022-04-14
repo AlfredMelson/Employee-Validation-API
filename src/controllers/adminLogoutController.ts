@@ -13,11 +13,9 @@ const adminDB = {
 const handleAdminLogout = async (req: Request, res: Response) => {
   // NOTE: FED needs to delete the accessToken in clientside memory
 
-  console.log('adminLogoutController - req', req)
-
-  // define cookies and grab it if it exists
-  const cookies = req?.cookies
-  console.log('adminLogoutController - cookies', cookies)
+  // set cookies to the request cookies
+  const cookies = req.cookies
+  console.log(`cookie available at logout: ${JSON.stringify(cookies)}`)
 
   // check that there are no cookies or (optionally chaining) for a jwt property and send status 204 if true: 'no content to send for this request'
   if (!cookies.jwt) return res.sendStatus(204)
@@ -25,11 +23,8 @@ const handleAdminLogout = async (req: Request, res: Response) => {
   // define the refreshToken and set it equal to value received
   const refreshToken = cookies.jwt
 
-  console.log('adminLogoutController - refreshToken', refreshToken)
-
-  // check if admin (username) exists in the database with a refreshToken
+  // check if admin exists in the database via refreshToken
   const foundAdmin = adminDB.admins.find(admin => admin.refreshToken === refreshToken)
-  console.log('adminLogoutController - foundAdmin', foundAdmin)
 
   // if no foundAdmin proceed with clearing the cookie
   if (!foundAdmin) {
@@ -40,10 +35,7 @@ const handleAdminLogout = async (req: Request, res: Response) => {
     return res.sendStatus(204)
   }
 
-  // At this point, the same refreshToken was found in the db, so proceed with deletion.
-
-  // filter out found admin(id) to define otherAdmins
-  const otherAdmin = adminDB.admins.filter(admin => admin.id !== foundAdmin.id)
+  // The same refreshToken was found in the db, so proceed with deletion.
 
   // create currentAdmin object with the foundAdmin and refreshToken set to ''
   const loggedOutAdmin = {
@@ -54,13 +46,17 @@ const handleAdminLogout = async (req: Request, res: Response) => {
     refreshToken: []
   }
 
-  // check the number of admin in the database
-  if (Object.keys(otherAdmin).length === 1) {
-    // pass in the current admin as the sole admin to setAdmins
-    adminDB.setAdmins([loggedOutAdmin])
+  // create an array of the other admins in the database that are not the hacked admin
+  const otherAdmin = adminDB.admins.filter(admin => admin.id !== foundAdmin.id)
+
+  // check the number of admins in the database
+  if (adminDB.admins.length <= 1) {
+    // pass in the logged out admin as the sole admin to setAdmins
+    adminDB.setAdmins(loggedOutAdmin)
   } else {
-    // pass in the other admins along with the current admin to setAdmins
-    adminDB.setAdmins([...otherAdmin, loggedOutAdmin])
+    // pass in the other admins along with the logged out admin to setAdmins
+    const allAdmin = [...otherAdmin, loggedOutAdmin]
+    adminDB.setAdmins(allAdmin)
   }
 
   // write the current user to the database

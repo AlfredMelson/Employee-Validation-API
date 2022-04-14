@@ -3,7 +3,7 @@ export interface IAdmin {
   username: string
   email: string
   password: string
-  refreshToken?: string[]
+  refreshToken: string[]
 }
 
 export const administrators: IAdmin[] = [
