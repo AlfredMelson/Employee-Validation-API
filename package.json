@@ -1,5 +1,5 @@
 {
-  "name": "employee_validation_server",
+  "name": "validation_api_dev",
   "version": "1.0.0",
   "license": "MIT",
   "author": "Alfred Melson",
@@ -22,7 +22,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alfredmelson/employee_validation_server.git"
+    "url": "git+https://github.com/AlfredMelson/validation_api_dev.git"
   },
   "main": "src/server.ts",
   "scripts": {
@@ -67,7 +67,7 @@
     "@types/express": "4.17.13",
     "@types/jest": "27.4.1",
     "@types/jsonwebtoken": "8.5.8",
-    "@types/node": "17.0.23",
+    "@types/node": "17.0.24",
     "@types/prettier": "2.6.0",
     "@types/rimraf": "3.0.2",
     "@types/uuid": "8.3.4",
