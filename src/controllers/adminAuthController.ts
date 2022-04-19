@@ -36,7 +36,7 @@ const handleAdminAuthentication = async (req: Request, res: Response) => {
 
     let newRefreshTokenArray = !cookies?.jwt
       ? foundAdmin.refreshToken
-      : foundAdmin.refreshToken.filter(token => token !== cookies.jwt)
+      : foundAdmin.refreshToken.filter((token: any) => token !== cookies.jwt)
 
     // delete cookie
     if (cookies?.jwt) {
@@ -49,7 +49,9 @@ const handleAdminAuthentication = async (req: Request, res: Response) => {
       const refreshToken = cookies.jwt
 
       // lookup refresh token in the database
-      const foundToken = foundAdmin.refreshToken.find(admin => admin.includes(refreshToken))
+      const foundToken = foundAdmin.refreshToken.find((admin: string | any[]) =>
+        admin.includes(refreshToken)
+      )
 
       // Detected refresh token reuse!
       if (!foundToken) {

@@ -1,7 +1,7 @@
 import express from 'express'
-import cors from 'cors'
+// import cors from 'cors'
 // import verification from './middleware/verification'
-import credentials from './middleware/credentials'
+// import credentials from './middleware/credentials'
 import cookieParser from 'cookie-parser'
 import { adminAuthRoute, adminRefreshRoute, adminLogoutRoute } from './routes/admin'
 import {
@@ -11,17 +11,17 @@ import {
   emplRegisterRoute,
   emplUpdateRoute
 } from './routes/empl'
-import corsOptions from './config/corsOptions'
+import { employeeRouter } from './routes/employee'
+// import corsOptions from './config/corsOptions'
 import path from 'path'
 import { logger } from './middleware/logEvents'
 import errorHandler from './middleware/errorHandler'
-import type { Request, Response } from 'express'
 import bodyParser from 'body-parser'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config()
 
-const PORT = process.env.PORT || 9003
+const port = process.env.port || 9003
 
 const app = express()
 
@@ -29,25 +29,26 @@ const app = express()
 app.use(logger)
 
 // Handle options credentials check before CORS and fetch cookies credentials requirement
-app.use(credentials)
+// app.use(credentials)
 
 // cross origin resource sharing configuration
-app.use(cors(corsOptions))
+// app.use(cors(corsOptions))
 
 // middleware for handling json
 app.use(bodyParser.json())
-
-// middleware for handling url encoded data
-app.use(bodyParser.urlencoded({ extended: true }))
-
-// built-in middleware to handle urlencoded form data
-// app.use(express.urlencoded({ extended: false }))
-
 // built-in middleware for json
 // app.use(express.json())
 
+// middleware for handling url encoded data
+app.use(bodyParser.urlencoded({ extended: true }))
+// built-in middleware to handle urlencoded form data
+// app.use(express.urlencoded({ extended: false }))
+
 //middleware for cookies
 app.use(cookieParser())
+
+// testing router
+app.use('/employee', employeeRouter)
 
 // routes
 app.use('/admin', adminLogoutRoute)
@@ -64,8 +65,16 @@ app.use('/api', emplDeletionRoute)
 // verification of jsonwebtoken
 // app.use(verification)
 
+app.use('/', (req: express.Request, res: express.Response) => {
+  res.send('<h1>Validation API</h1> <h4>Message: Success</h4><p>Version: 1.0</p>')
+})
+
+app.use('/health', (req: express.Request, res: express.Response) => {
+  res.send()
+})
+
 // dev catch-all (404)
-app.all('*', (req: Request, res: Response) => {
+app.all('*', (req: express.Request, res: express.Response) => {
   res.status(404)
   if (req.accepts('html')) {
     res.sendFile(path.join(__dirname, 'views', '404.html'))
@@ -80,8 +89,8 @@ app.all('*', (req: Request, res: Response) => {
 app.use(errorHandler)
 
 // Express server
-const server = app.listen(PORT, () => {
-  console.log('Express server has been started on port ', PORT)
+const server = app.listen(port, () => {
+  console.log('Express server has been started on port ', port)
 })
 
 export default server

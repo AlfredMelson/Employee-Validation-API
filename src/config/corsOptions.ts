@@ -8,11 +8,11 @@ type StaticOrigin = boolean | string | RegExp | (boolean | string | RegExp)[]
 
 const corsOptions = {
   origin: (
-    origin: string | undefined,
+    requestOrigin: string | undefined,
     callback: (err: Error | null, origin?: StaticOrigin) => void
   ) => {
-    if (origin !== undefined) {
-      if (approvedOrigins.indexOf(origin) !== -1 || !origin) {
+    if (requestOrigin !== undefined) {
+      if (approvedOrigins.indexOf(requestOrigin) !== -1 || !requestOrigin) {
         callback(null, true)
       } else {
         callback(new Error('Not approved by CORS'))
