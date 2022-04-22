@@ -1,7 +1,7 @@
 import express from 'express'
-// import cors from 'cors'
+import cors from 'cors'
 // import verification from './middleware/verification'
-// import credentials from './middleware/credentials'
+import credentials from './middleware/credentials'
 import cookieParser from 'cookie-parser'
 import { adminAuthRoute, adminRefreshRoute, adminLogoutRoute } from './routes/admin'
 import {
@@ -12,16 +12,13 @@ import {
   emplUpdateRoute
 } from './routes/empl'
 import { employeeRouter } from './routes/employee'
-// import corsOptions from './config/corsOptions'
+import corsOptions from './config/corsOptions'
 import path from 'path'
 import { logger } from './middleware/logEvents'
 import errorHandler from './middleware/errorHandler'
 import bodyParser from 'body-parser'
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('dotenv').config()
-
-const port = process.env.port || 9003
+import http from 'http'
+import { config } from './config/config'
 
 const app = express()
 
@@ -29,10 +26,10 @@ const app = express()
 app.use(logger)
 
 // Handle options credentials check before CORS and fetch cookies credentials requirement
-// app.use(credentials)
+app.use(credentials)
 
 // cross origin resource sharing configuration
-// app.use(cors(corsOptions))
+app.use(cors(corsOptions))
 
 // middleware for handling json
 app.use(bodyParser.json())
@@ -88,9 +85,12 @@ app.all('*', (req: express.Request, res: express.Response) => {
 // middleware for handling errors
 app.use(errorHandler)
 
-// Express server
-const server = app.listen(port, () => {
-  console.log('Express server has been started on port ', port)
-})
+http
+  .createServer(app)
+  .listen(config.server.port, () => console.log(`Server is running on port ${config.server.port}`))
 
-export default server
+// Express server
+// const server = app.listen(PORT, () => {
+//   console.log('Express server has been started on port ', PORT)
+// })
+// export default server

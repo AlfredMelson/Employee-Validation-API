@@ -19,7 +19,9 @@ const handleAdminAuthentication = async (req: Request, res: Response) => {
   const { adminUsername, adminPassword } = req.body
 
   // check if admin exists in the database via username
-  const foundAdmin = adminDB.admins.find(admin => admin.username === adminUsername)
+  const foundAdmin = adminDB.admins.find(
+    (admin: { username: any }) => admin.username === adminUsername
+  )
 
   // send status 401: 'unauthorized; response means unauthenticated' if no duplicate found
   if (!foundAdmin) return res.sendStatus(401)
@@ -77,7 +79,7 @@ const handleAdminAuthentication = async (req: Request, res: Response) => {
     // check the number of admins in the database
     if (adminDB.admins.length <= 1) {
       // pass in the current admin as the sole admin to setAdmins
-      adminDB.setAdmins(authenticatedAdmin)
+      adminDB.setAdmins([authenticatedAdmin])
     } else {
       // pass in the other admins along with the current admin to setAdmins
       const allAdmin = [...otherAdmin, authenticatedAdmin]

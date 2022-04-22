@@ -45,6 +45,7 @@ router.get('/all', async (req: express.Request, res: express.Response) => {
     const body = {
       employees: allEmployees
     }
+    console.log('body: ', body)
     res.json(body)
   } catch (error) {
     console.error('Error handling log: ', error)
