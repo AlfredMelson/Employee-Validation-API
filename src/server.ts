@@ -1,6 +1,5 @@
 import express from 'express'
 import cors from 'cors'
-// import verification from './middleware/verification'
 import credentials from './middleware/credentials'
 import cookieParser from 'cookie-parser'
 import { adminAuthRoute, adminRefreshRoute, adminLogoutRoute } from './routes/admin'
@@ -17,8 +16,8 @@ import path from 'path'
 import { logger } from './middleware/logEvents'
 import errorHandler from './middleware/errorHandler'
 import bodyParser from 'body-parser'
-import http from 'http'
 import { config } from './config/config'
+// import verification from './middleware/verification'
 
 const app = express()
 
@@ -85,12 +84,8 @@ app.all('*', (req: express.Request, res: express.Response) => {
 // middleware for handling errors
 app.use(errorHandler)
 
-http
-  .createServer(app)
-  .listen(config.server.port, () => console.log(`Server is running on port ${config.server.port}`))
-
 // Express server
-// const server = app.listen(PORT, () => {
-//   console.log('Express server has been started on port ', PORT)
-// })
-// export default server
+const server = app.listen(config.server.port, () => {
+  console.log('Express server has been started on port ', config.server.port)
+})
+export default server
