@@ -8,6 +8,7 @@ const credentials = (req: Request, res: Response, next: NextFunction) => {
   if (requestOrigin) {
     // if origin exists in allowedUrls, allow it
     if (approvedOrigins.includes(requestOrigin)) {
+      res.header('Access-Control-Allow-Origin', 'https://validate.hmtgp.com')
       res.header('Access-Control-Allow-Credentials', 'true')
     }
   }
