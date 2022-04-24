@@ -84,6 +84,8 @@ app.all('*', (req: express.Request, res: express.Response) => {
 // middleware for handling errors
 app.use(errorHandler)
 
+app.get('/', (_req, res) => res.send('validation api testing 1.2.3.'))
+
 // Express server
 const server = app.listen(config.server.port, () => {
   console.log('Express server has been started on port ', config.server.port)

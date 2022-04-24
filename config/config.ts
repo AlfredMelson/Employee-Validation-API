@@ -2,10 +2,10 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const PORT = process.env.PORT || 9003
+const port = process.env.PORT || 9003
 
 export const config = {
   server: {
-    port: PORT
+    port: port
   }
 }

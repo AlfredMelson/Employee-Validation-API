@@ -4,7 +4,6 @@
   "license": "MIT",
   "author": "Alfred Melson",
   "tags": [
-    "employee-management",
     "employee-registration",
     "registration-validation"
   ],
@@ -24,7 +23,7 @@
     "type": "git",
     "url": "git+https://github.com/AlfredMelson/validation_api_dev.git"
   },
-  "main": "src/server.ts",
+  "main": "server.ts",
   "scripts": {
     "build-ts": "tsc",
     "build": "yarn build-ts && yarn lint-fx",
@@ -32,13 +31,13 @@
     "clean-build": "rimraf build",
     "clean-mdls": "lerna clean --yes && rimraf node_modules yarn.lock",
     "debug": "yarn build && yarn watch-debug",
-    "dev": "tsnd --respawn --transpile-only src/server.ts",
-    "lint-ck": "eslint ./src --ext .ts",
-    "lint-fx": "eslint ./src --ext .ts --fix",
+    "dev": "tsnd --respawn --transpile-only server.ts",
+    "lint-ck": "eslint --ext .ts",
+    "lint-fx": "eslint --ext .ts --fix",
     "serve-debug": "tsnd --debug build/server.js",
     "start": "node build/server.js",
-    "style-ck": "prettier --check ./src --ext .ts",
-    "style-fx": "prettier --write ./src --ext .ts",
+    "style-ck": "prettier --check --ext .ts",
+    "style-fx": "prettier --write --ext .ts",
     "test": "jest --forceExit --coverage --verbose",
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yarn watch-ts\" \"yarn serve-debug\"",
     "watch-ts": "tsc -w"
@@ -74,7 +73,7 @@
     "@types/uuid": "8.3.4",
     "@typescript-eslint/eslint-plugin": "5.20.0",
     "@typescript-eslint/parser": "5.20.0",
-    "eslint": "8.13.0",
+    "eslint": "8.14.0",
     "eslint-config-prettier": "8.5.0",
     "jest": "27.5.1",
     "lerna": "4.0.0",

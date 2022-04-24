@@ -5,14 +5,12 @@
     "forceConsistentCasingInFileNames": true,
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "./build",
+    "outDir": "build",
     "removeComments": true,
     "resolveJsonModule": true,
     "rootDir": "./",
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext"
-  },
-  "include": ["src/**/*"]
+  }
 }
-
