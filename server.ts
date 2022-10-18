@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import credentials from './middleware/credentials'
+// import credentials from './middleware/credentials'
 import cookieParser from 'cookie-parser'
 import { adminAuthRoute, adminRefreshRoute, adminLogoutRoute } from './routes/admin'
 import {
@@ -25,7 +25,7 @@ const app = express()
 app.use(logger)
 
 // Handle options credentials check before CORS and fetch cookies credentials requirement
-app.use(credentials)
+// app.use(credentials)
 
 // cross origin resource sharing configuration
 app.use(cors(corsOptions))

@@ -12,7 +12,8 @@
     "password": "$2b$10$1u4D0qE5riDfc9LV7QUrBu4L1AHAQ6VdD61hrFoox4bjymE1NhW7u",
     "email": "user@organization.com",
     "refreshToken": [
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNjUwNjEwMTYwLCJleHAiOjE2NTA2OTY1NjB9.gKVr5K8X4UOJ1uUzpJJ6XPdBO4zBWmoZAGGIuVYslKM"
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNjUwNjEwMTYwLCJleHAiOjE2NTA2OTY1NjB9.gKVr5K8X4UOJ1uUzpJJ6XPdBO4zBWmoZAGGIuVYslKM",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNjUwNzc4ODg1LCJleHAiOjE2NTA4NjUyODV9.rVPRZQgaaKUs4MxldV5_Bf2HjX84IlJzOF_0qQPszUE"
     ]
   }
 ]

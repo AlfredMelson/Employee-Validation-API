@@ -214,3 +214,11 @@
 20220422	09:50:46	43c9bf47-5a89-4b2f-b6c2-080d2e44e1cf	GET	http://localhost:3000	/employee/all
 20220422	09:51:06	bc8f44db-7f65-4b04-a7f7-339473876ad7	GET	http://localhost:3000	/employee/all
 20220422	09:51:06	e2402ff0-869e-41e4-8896-8867c7147caf	GET	http://localhost:3000	/employee/all
+20220424	08:40:40	fda8b8bd-ff04-45c0-bc46-1e5ae7ff6ce5	OPTIONS	http://localhost:3000	/admin/auth
+20220424	08:40:40	d7a08462-6550-4576-976e-cdede21369ba	POST	http://localhost:3000	/admin/auth
+20220424	08:40:42	8e52f6c3-ac3f-400c-861e-04c938da9314	GET	http://localhost:3000	/employee/all
+20220424	08:40:42	647ca474-3735-4ef6-9a2c-8dd14aa31eee	GET	http://localhost:3000	/employee/all
+20220424	08:41:24	bfdd99be-f86d-489a-8c23-adfe7c1e225d	OPTIONS	http://localhost:3000	/admin/auth
+20220424	08:41:24	9d04ab8d-9800-4116-b816-68343c5712a2	POST	http://localhost:3000	/admin/auth
+20220424	08:41:27	eba14428-d4bb-422c-98cb-74b36f6de3f6	GET	http://localhost:3000	/employee/all
+20220424	08:41:27	1a8d4d06-c898-40b7-b858-adec2b844b3a	GET	http://localhost:3000	/employee/all
